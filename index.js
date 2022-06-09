@@ -3,17 +3,22 @@ const mongoose = require("mongoose");
 const express = require('express');
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/vidly',{ useNewUrlParser: true , useUnifiedTopology: true })
-    .then(()=>{ return console.log("Connected to MongoDB Localhost...");
-    })
-    .catch((err)=>{
-        console.log(" cannot connect to mongodb \n error: ", err);
-    })
+
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Database connection Success.");
+  })
+  .catch((err) => {
+    console.error("Mongo Connection Error", err);
+  });
+
 
 require("./src/validation")();
-require("./src/routes")(app);
 require("./src/prodMidWare")(app);
-
+require("./src/routes")(app);
 
 
 const port = process.env.PORT || 3000;
