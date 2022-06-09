@@ -57,7 +57,7 @@ router.post("/register", async (req, res) => {
         await user.save();
 
         const token = user.generateVerifyToken();
-        await sendEmail(user.email, token , "verify");
+        await sendEmail(user.email, token, user.name, "verify");
 
         res.json({
             message: "User created successfully. Check your email for verification link"
@@ -77,7 +77,7 @@ router.get("/verify",auth,async (req, res) => {
     try{
         const user = await User.findById(req.user._id);
         const token = user.generateVerifyToken();
-        await sendEmail(user.email, token,"verify");
+        await sendEmail(user.email, token, user.name,"verify");
         res.json({
             message: "verification email sent successfully to your email"
         });
@@ -154,7 +154,7 @@ router.post("/reset",async (req, res) => {
             });
         }
         const token = user.generateResetToken();
-        await sendEmail(user.email, token, "reset");
+        await sendEmail(user.email, token, user.name, "reset");
         res.json({
             message: "password reset email sent successfully to your email"
         });
