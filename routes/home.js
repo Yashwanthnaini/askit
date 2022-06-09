@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/" , (req,res) => {
-    res.send("Hello world");
+    res.json({
+        message: "server is healthy"
+    });
 })
 
 module.exports = router;

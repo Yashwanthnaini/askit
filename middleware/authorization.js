@@ -10,7 +10,10 @@ function auth(req, res, next) {
         next();
     } 
     catch (ex) {
-        res.status(400).send("Invalid token.");
+        console.log(ex);
+        res.status(400).json({
+            error:"Invalid token"
+        });
     }
 }
 

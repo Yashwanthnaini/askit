@@ -11,6 +11,11 @@ const router = express.Router();
 
 router.get("/me", auth ,async (req, res) => {
     try{
+        if(!req.user.isVerified){
+            return res.redirect({
+                error: "verify your email first"
+            })
+        }
         const user = await User.findById(req.user._id).select("-password -__v -isAdmin");
         res.send(user);
     }
