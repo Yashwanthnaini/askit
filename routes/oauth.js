@@ -38,7 +38,7 @@ router.get("/handler/google", async(req, res) => {
         
         const token = user.generateAuthToken();
         res.cookie('x-auth-token',token);
-        res.redirect("http://localhost:3000/api/users/me");
+        res.redirect("https://askito.herokuapp.com/api/users/me");
     }
     catch(ex){
         console.error(ex);
