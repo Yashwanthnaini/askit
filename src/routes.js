@@ -5,12 +5,14 @@ const questions = require("../routes/questions");
 const oauth = require("../routes/oauth");
 const blog = require("../routes/blog");
 const auth = require("../routes/auth");
+const cors = require('cors');
 const express = require ("express");
 
 module.exports = function (app) {
     app.use(express.json());//body parser
     app.use(express.urlencoded({extended: true}));//for html forms
     app.use(express.static('public'));//to load html files
+    app.use(cors());
 
     app.use("/", home);
     app.use("/api/users", users);
