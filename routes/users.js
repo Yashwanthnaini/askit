@@ -12,11 +12,16 @@ const router = express.Router();
 router.get("/me", auth ,async (req, res) => {
     try{
         if(!req.user.isVerified){
-            return res.redirect({
+            return res.json({
                 error: "verify your email first"
             })
         }
         const user = await User.findById(req.user._id).select("-password -__v -isAdmin");
+        if(!user){
+            return res.json({
+                message : "invalid token"
+            })
+        }
         res.send(user);
     }
     catch(ex){
@@ -29,7 +34,7 @@ router.get("/me", auth ,async (req, res) => {
 
 router.get("/user/:name", async(req, res)=>{
     try{
-        const user = await User.findOne({name: req.params.name}).select("-password -isAdmin -_id -__v");
+        const user = await User.findOne({name: req.params.name}).select("-password -isAdmin -_id -__v -isVerified");
         if(!user){ 
            return res.status(404).json({
                 error: "user not found"
