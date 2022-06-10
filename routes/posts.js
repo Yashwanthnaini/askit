@@ -67,11 +67,6 @@ router.post("/add", auth, async(req, res)=>{
     try{
         const {error} = validatePost(req.body);
         if (error) return res.status(400).send(error.details[0].message);
-        if(!req.user.isVerified){
-            return res.json({
-                error: "verify your email first"
-            })
-        }
         const user = await User.findById(req.user._id);
         if (!user) return res.status(400).send("Invalid user.");
 
