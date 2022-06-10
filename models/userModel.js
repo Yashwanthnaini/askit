@@ -72,6 +72,7 @@ function validateLogin(user){
     return schema.validate(user);
 }
 
+module.exports.userSchema = userSchema;
 module.exports.User = User;
 module.exports.validateUser= validateUser;
 module.exports.validateLogin= validateLogin;
