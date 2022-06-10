@@ -54,7 +54,12 @@ router.post("/register", async (req, res) => {
     try{
         const {error} = validateUser(req.body);
         if (error) return res.status(400).send(error.details[0].message);
-
+        let username = await User.findOne({name: req.body.name});
+        if(username){
+            return res.status(400).json({
+                error: "try different username"
+            });
+        }
         let user = await User.findOne({email: req.body.email});
         if (user) return res.status(400).json({
             error: "User already exists"
@@ -136,7 +141,9 @@ router.post("/login", async (req, res) => {
         });
         
         const token = user.generateAuthToken();
-        res.header('x-auth-token',token).json({
+        res.header('x-auth-token',token)
+        .header("access-control-expose-headers", "x-auth-token")
+        .json({
             message: "login successful",
         });
     }
