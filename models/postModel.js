@@ -19,7 +19,8 @@ const postSchema = new mongoose.Schema({
         required: true
     },
     tags: {
-        type: Array
+        type: Array,
+        lowercase: true
     },
     date: {
         type: Date, 
