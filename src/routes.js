@@ -1,7 +1,7 @@
 const home = require("../routes/home");
 const users = require("../routes/users");
 const search = require("../routes/search");
-const post = require("../routes/posts");
+const posts = require("../routes/posts");
 //const questions = require("../routes/questions");
 //const answers = require("../routes/answers");
 const oauth = require("../routes/oauth");
@@ -20,7 +20,7 @@ module.exports = function (app) {
     app.use("/api/users", users);
     app.use("/api/oauth", oauth);
     app.use("/api/search", search);
-    app.use("api/posts",post)
+    app.use("api/posts",posts)
     // app.use("/api/questions", questions);
     // app.use("/api/blog", blog);
     // app.use("/api/auth", auth);
