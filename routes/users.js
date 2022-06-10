@@ -105,15 +105,11 @@ router.get("/verify/:token", emailVerify, async (req, res) => {
     try{
         const user = await User.findById(req.user._id);
         if(!user){
-            return res.status(404).json({
-                error: "user not found"
-            });
+            return res.redirect("http://localhost:3000/email/verify/invalid");
         }
         user.isVerified = true;
         await user.save();
-        res.json({
-            message: "email verified successfully"
-        });
+        res.redirect("http://localhost:3000/email/verify");
     }
     catch(ex){
         console.error(ex);
