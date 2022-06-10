@@ -3,11 +3,17 @@ const {User} = require("../models/userModel");
 const express = require("express");
 const router = express.Router();
 
+
 router.post("/add", async(req, res)=>{
     try{
         const {error} = validatePost(req.body);
         if (error) return res.status(400).send(error.details[0].message);
-        const user = await User.findById(req.body.userId);
+        if(!req.user.isVerified){
+            return res.json({
+                error: "verify your email first"
+            })
+        }
+        const user = await User.findById(req.user._id);
         if (!user) return res.status(400).send("Invalid user.");
 
         const post = new Post({
@@ -30,5 +36,6 @@ router.post("/add", async(req, res)=>{
         });
     }
 });
+
 
 module.exports = router;
