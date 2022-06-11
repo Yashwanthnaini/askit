@@ -12,7 +12,7 @@ router.get("/:pagesize/:pagenum", async(req,res)=>{
         const posts = await Post
                             .find()
                             .sort("date")
-                            .select("-author._id __v")
+                            .select("title data author.name tags date comments")
                             .skip(pagenum-1*pagesize)
                             .limit(pagesize);
         if(!posts){
@@ -39,9 +39,9 @@ router.get("/myposts/:pagesize/:pagenum", auth, async(req,res)=>{
     const pagenum = req.params.pagenum
     try{
         const posts = await Post
-                            .find()
+                            .find({"author.id" : req.user.id})
                             .sort("date")
-                            .select("-author._id __v")
+                            .select("title data author.name tags date comments")
                             .skip(pagenum-1*pagesize)
                             .limit(pagesize);
         if(!posts){
@@ -74,8 +74,7 @@ router.post("/add", auth, async(req, res)=>{
             title: req.body.title,
             author: {
                 _id: user._id,
-                name: user.name,
-                email: user.email
+                name: user.name
             },
             data : req.body.data,
             tags:[req.body.tags],

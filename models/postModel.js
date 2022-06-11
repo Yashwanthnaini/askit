@@ -15,8 +15,14 @@ const postSchema = new mongoose.Schema({
         requied: true
     },
     author: {
-        type: userSchema,
-        required: true
+        type: new mongoose.Schema({
+            name: {
+                type: String,
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+        })
     },
     tags: {
         type: Array,
