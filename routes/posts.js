@@ -74,14 +74,17 @@ router.post("/add", auth, async(req, res)=>{
             title: req.body.title,
             author: {
                 _id: user._id,
-                name: user.name
+                name: user.name,
+                email: user.email
             },
             data : req.body.data,
             tags:[req.body.tags],
             comments:[req.body.comments]
         });
         await post.save();
-        res.send(post);
+        res.json({
+            message : "post created successfully"
+        });
     }
     catch(ex){
         console.error(ex);
