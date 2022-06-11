@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const Joi = require('joi');
-const {userSchema} = require("./userModel"); 
+const Joi = require('joi'); 
 
 
 const postSchema = new mongoose.Schema({
@@ -21,8 +20,9 @@ const postSchema = new mongoose.Schema({
                 required: true,
                 minlength: 5,
                 maxlength: 50
-            },
-        })
+            }
+        }),
+            required: true
     },
     tags: {
         type: Array,
@@ -31,9 +31,6 @@ const postSchema = new mongoose.Schema({
     date: {
         type: Date, 
         default: Date.now
-    },
-    comments: {
-        type: Array
     }
 });
 
@@ -44,7 +41,6 @@ function validatePost(post){
         title: Joi.string().min(5).max(255).required(),
         data: Joi.string().required(),
         tags: Joi.array().optional(),
-        comments: Joi.array().optional()
     });
     return schema.validate(post);
 }

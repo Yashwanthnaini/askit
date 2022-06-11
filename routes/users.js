@@ -11,11 +11,6 @@ const router = express.Router();
 
 router.get("/me", auth ,async (req, res) => {
     try{
-        if(!req.user.isVerified){
-            return res.json({
-                error: "verify your email first"
-            })
-        }
         const user = await User.findById(req.user._id).select("-password -__v -isAdmin");
         if(!user){
             return res.json({
