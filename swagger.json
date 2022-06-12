@@ -3,13 +3,9 @@
     "info": {
       "version": "1.0.0",
       "title": "Askito Rest api",
-      "description": "A community for developers to share their knowledge",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
+      "description": "A community for developers to share their knowledge"
     },
-    "host": "localhost:3000",
+    "host": "https://askito.herokuapp.com",
     "basePath": "/api/",
     "tags": [
       {
@@ -97,6 +93,7 @@
             }
           ],
           "responses": {
+            
             "200": {
               "description": "Login successfully"
             },
@@ -159,6 +156,13 @@
           ],
           "parameters": [
             {
+              "in": "path",
+              "name": "token",
+              "description": "token need to in params",
+              "required": true,
+              "type": "string"
+            },
+            {
               "in": "body",
               "name": "body",
               "description": "User object that needs to be added to the system",
@@ -181,7 +185,7 @@
           }
         }
       },
-      "/users/{name}": {
+      "/users/user/{name}": {
         "get": {
           "tags": ["Users"],
           "summary": "Get User profile details by name",
@@ -236,7 +240,7 @@
             {
               "in": "header",
               "name": "x-auth-token",
-              "description": "name of user to be fetched",
+              "description": "",
               "required": true,
               "type": "string"
             }
@@ -260,6 +264,40 @@
       "/users/verify":{
         "get": {
           "tags": ["Users"],
+          "summary": "sends email verification email to user email",
+          "description": "",
+          "operationId": "VerifyUser",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "headers",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "verification email sent successfully to your email"
+            },
+            "404": {
+              "description": "invalid token"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/users/verify/{token}":{
+        "get": {
+          "tags": ["Users"],
           "summary": "Verify user email",
           "description": "",
           "operationId": "VerifyUser",
@@ -271,7 +309,7 @@
           ],
           "parameters": [
             {
-              "in": "query",
+              "in": "path",
               "name": "token",
               "description": "token to be verified",
               "required": true,
@@ -289,7 +327,9 @@
               "description": "something went wrong try after some time!"
             }
           }
-      },
+        }
+      }
+    },
 
       "definitions": {
         "User": {
@@ -334,6 +374,4 @@
           }
         }
       } 
-    }
-  }
 }
