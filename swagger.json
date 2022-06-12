@@ -1,0 +1,339 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Askito Rest api",
+      "description": "A community for developers to share their knowledge",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/",
+    "tags": [
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      },
+      {
+        "name": "Posts",
+        "description": "API for posts in the system"
+      },
+      {
+        "name": "Comments",
+        "description": "API for comments in the system"
+      },
+      {
+        "name": "Tags",
+        "description": "API for tags in the system"
+      },
+      {
+        "name": "Notifications",
+        "description": "API for users in the system"
+      }
+    ],
+    "schemes": ["http","https"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+      "/users/register": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "Create new user in system",
+          "description": "",
+          "operationId": "addUser",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "user created successfully"
+            },
+            "400": {
+              "description": "User already exists (or) try different username"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/users/login":{
+        "post": {
+          "tags": ["Users"],
+          "summary": "Login user in system",
+          "description": "",
+          "operationId": "LoginUser",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Login"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Login successfully"
+            },
+            "400": {
+              "description": "Invalid email or password"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/users/reset": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "sends password reset link to user email.",
+          "description": "",
+          "operationId": "ResetPassword",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Reset"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "password reset email sent successfully to your email"
+            },
+            "404": {
+              "description": "user not found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/users/reset/{token}": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "Resets password for user",
+          "description": "",
+          "operationId": "ResetPassword",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/ResetPassword"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "password reset successfully"
+            },
+            "404": {
+              "description": "user not found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/users/{name}": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get User profile details by name",
+          "description": "",
+          "operationId": "getUserProfileByName",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "name",
+              "description": "name of user to be fetched",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "user fetched successfully",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            },
+            "404": {
+              "description": "user not found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/users/me": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get User profile details of login user",
+          "description": "",
+          "operationId": "getUserProfile",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "name of user to be fetched",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "user fetched successfully",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            },
+            "404": {
+              "description": "user not found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/users/verify":{
+        "get": {
+          "tags": ["Users"],
+          "summary": "Verify user email",
+          "description": "",
+          "operationId": "VerifyUser",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "query",
+              "name": "token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "user verified successfully"
+            },
+            "404": {
+              "description": "user not found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+      },
+
+      "definitions": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        },
+        "Login":{
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        },
+        "Reset":{
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            }
+          }
+        },
+        "ResetPassword":{
+          "type": "object",
+          "properties": {
+            "password": {
+              "type": "string"
+            }
+          }
+        }
+      } 
+    }
+  }
+}
