@@ -45,9 +45,10 @@ router.get("/:pagesize/:pagenum", async(req,res)=>{
                 message : "No posts found"
             })
         }
+        const count = await Post.countDocuments({});
         res.json({
             posts : posts,
-            totalPosts : posts.length
+            totalPosts : count
         });                    
     }
     catch(ex){
