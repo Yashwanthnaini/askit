@@ -9,7 +9,7 @@ router.get("/post/:id" , async (req, res) => {
     try{
         const post = await Post.findById(req.params.id);
         if(!post){
-            return res.json({
+            return res.status(404).json({
                 message : "This post doesn't exist"
             })
         }
@@ -148,7 +148,7 @@ router.put("/:id", auth, async (req, res) => {
 
 router.delete("/:id", auth, async (req, res) => {
     const post = await Post.findByIdAndRemove(req.params.id);
-    if (!post) return res.status(404).send("The movie with the given ID was not found.");
+    if (!post) return res.status(404).send("The post with the given ID was not found.");
     res.send("post deleted");
 });
 

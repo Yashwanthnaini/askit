@@ -5,7 +5,7 @@
       "title": "Askito Rest api",
       "description": "A community for developers to share their knowledge"
     },
-    "host": "https://askito.herokuapp.com",
+    "host": "askito.herokuapp.com",
     "basePath": "/api/",
     "tags": [
       {
@@ -27,12 +27,18 @@
       {
         "name": "Notifications",
         "description": "API for users in the system"
+      },
+      {
+        "name": "Oauth",
+        "description": "Oauth for authentication"
       }
     ],
-    "schemes": ["http","https"],
+    "schemes": ["https"],
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "paths": {
+
+
       "/users/register": {
         "post": {
           "tags": ["Users"],
@@ -161,15 +167,6 @@
               "description": "token need to in params",
               "required": true,
               "type": "string"
-            },
-            {
-              "in": "body",
-              "name": "body",
-              "description": "User object that needs to be added to the system",
-              "required": true,
-              "schema": {
-              "$ref": "#/definitions/ResetPassword"
-              }
             }
           ],
           "responses": {
@@ -328,8 +325,463 @@
             }
           }
         }
+      },
+
+
+      "/posts/add": {
+        "post": {
+          "tags": ["Posts"],
+          "summary": "add new post",
+          "description": "",
+          "operationId": "addPost",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "headers",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Post object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Post"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "post created successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/posts/post/{id}": {
+        "get": {
+          "tags": ["Posts"],
+          "summary": "Get posts by id",
+          "description": "",
+          "operationId": "getPostById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be fetched",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Post"
+              }
+            },
+            "404": {
+              "description": "This post doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/posts/{pagesize}/{pagenum}": {
+        "get": {
+          "tags": ["Posts"],
+          "summary": "Get total posts",
+          "description": "",
+          "operationId": "getPosts",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "pagesize",
+              "description": "size of the page like 5 for 5 posts per page",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "pagenum",
+              "description": "page number",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Post"
+              }
+            },
+            "404": {
+              "description": "No posts found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/posts/myposts/{pagesize}/{pagenum}": {
+        "get": {
+          "tags": ["Posts"],
+          "summary": "Get total posts of the login user",
+          "description": "",
+          "operationId": "getPostsOfLoginUser",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "pagesize",
+              "description": "size of the page like 5 for 5 posts per page",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "pagenum",
+              "description": "page number",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "headers",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Post"
+              }
+            },
+            "404": {
+              "description": "No posts found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/posts/{id}": {
+        "put": {
+          "tags": ["Posts"],
+          "summary": "update post by id",
+          "description": "",
+          "operationId": "updatePostById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Post object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Post"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Post"
+              }
+            },
+            "404": {
+              "description": "This post doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/posts/{id}": {
+        "delete": {
+          "tags": ["Posts"],
+          "summary": "delete post by id",
+          "description": "",
+          "operationId": "deletePostById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be updated",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "post deleted"
+            },
+            "404": {
+              "description": "The post with the given ID was not found."
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/tags/add": {
+        "post": {
+          "tags": ["Tags"],
+          "summary": "add new tag",
+          "description": "",
+          "operationId": "addTag",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "headers",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "tag",
+              "description": "name of the tag",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "tag saved sucessfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      "/tags/": {
+        "get": {
+          "tags": ["Tags"],
+          "summary": "Get tags",
+          "description": "",
+          "operationId": "getTags",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Tag"
+              }
+            },
+            "404": {
+              "description": "no tags found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+
+      "/oauth/google": {
+        "get": {
+          "tags": ["Oauth"],
+          "summary": "for google authentication",
+          "description": "",
+          "operationId": "Oauth",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+          ],
+          "responses": {
+            "200": {
+              "description": "redirected to home page"
+            },
+            "404": {
+              "description": "authentication failed"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/notifications/": {
+        "get": {
+          "tags": ["Notifications"],
+          "summary": "Get Notifications of the loged in user",
+          "description": "",
+          "operationId": "getNotificationsOfLogedInUser",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "headers",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Notification"
+              }
+            },
+            "404": {
+              "description": "no notifications found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/comments/add": {
+        "post": {
+          "tags": ["Comments"],
+          "summary": "add new comment",
+          "description": "",
+          "operationId": "addComment",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "headers",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Comment object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Comment"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "comment updated successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
       }
+
+
+
+
+
     },
+
+
+
 
       "definitions": {
         "User": {
@@ -372,6 +824,56 @@
               "type": "string"
             }
           }
+        },
+
+
+
+        "Post": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "data": {
+              "type": "string"
+            },
+            "tags": [
+              {"type": "string"}
+            ]
+          }
+        },
+
+
+        "Tag": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+
+        "Notification": {
+          "type": "object",
+          "properties": {
+            "notification": {
+              "type": "string"
+            }
+          }
+        },
+
+
+        "Comment": {
+          "type": "object",
+          "properties": {
+            "comment": {
+              "type": "string"
+            },
+            "postId" : {
+              "type" : "string"
+            }
+          }
         }
+
       } 
 }

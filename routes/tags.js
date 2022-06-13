@@ -3,7 +3,7 @@ const router = express.Router();
 const {Tag , validateTag} = require("../models/tagModel");
 const admin = require("../middleware/admin");
 
-router.get("/", admin, async (req, res) => {
+router.get("/", async (req, res) => {
     try{
         const tags = await Tag
                         .fing()
@@ -31,7 +31,7 @@ router.post("/add", admin, async (req, res) => {
        
         await tag.save();
         res.json({
-            message : "tags saved sucessfully"
+            message : "tag saved sucessfully"
         });
     }
     catch(ex){
