@@ -63,6 +63,13 @@ function validateUser(user){
     return schema.validate(user);
 }
 
+function validateUsername(user){
+    const schema = Joi.object({
+        name: Joi.string().min(5).max(50).required()
+    });
+    return schema.validate(user);
+}
+
 
 function validateLogin(user){
     const schema = Joi.object({
@@ -72,7 +79,26 @@ function validateLogin(user){
     return schema.validate(user);
 }
 
+
+function validateUserEmail(user){
+    const schema = Joi.object({
+        email: Joi.string().min(5).max(255).required().email()
+    });
+    return schema.validate(user);
+}
+
+function validateUserPassword(user){
+    const schema = Joi.object({
+        password: Joi.string().min(5).max(255).required()
+    });
+    return schema.validate(user);
+}
+
+
 module.exports.userSchema = userSchema;
 module.exports.User = User;
 module.exports.validateUser= validateUser;
 module.exports.validateLogin= validateLogin;
+module.exports.validateUsername= validateUsername;
+module.exports.validateUserEmail= validateUserEmail;
+module.exports.validateUserPassword= validateUserPassword;

@@ -5,6 +5,7 @@ const posts = require("../routes/posts");
 const tags = require("../routes/tags");
 const comments = require("../routes/comments");
 const notifications = require("../routes/notifications");
+const questions = require("../routes/questions");
 //const questions = require("../routes/questions");
 //const answers = require("../routes/answers");
 const oauth = require("../routes/oauth");
@@ -27,7 +28,7 @@ module.exports = function (app) {
     app.use("/api/tags",tags);
     app.use("/api/comments", comments);
     app.use("/api/notifications",notifications);
-    // app.use("/api/questions", questions);
+    app.use("/api/questions", questions);
     // app.use("/api/blog", blog);
     // app.use("/api/auth", auth);
 }

@@ -6,16 +6,15 @@ const notificationSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+    link: {
+        type : String
+    },
     isNoticied: {
         type : Boolean,
         default : false
     },
     user:{
         type : new mongoose.Schema({
-            name : {
-                type : String,
-                required : true,
-            }
         }),
         required : true
     },

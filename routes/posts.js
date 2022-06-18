@@ -76,9 +76,10 @@ router.get("/myposts/:pagesize/:pagenum", auth, async(req,res)=>{
                 totalPosts : 0
             })
         }
+        const count = await Question.countDocuments({"author.id" : req.user.id});
         res.json({
             posts : posts,
-            totalPosts : posts.length
+            totalPosts : count
         });                    
     }
     catch(ex){
@@ -148,10 +149,13 @@ router.put("/:id", auth, async (req, res) => {
 });
 
 router.delete("/:id", auth, async (req, res) => {
-    const post = await Post.findByIdAndRemove(req.params.id);
-    if (!post) return res.status(404).send("The post with the given ID was not found.");
+    const post = await findById(req.params.id);
+    if(!post) return res.status(404).send("The post with the given ID was not found.");
+    if(post.author.name !== req.user.name){
+        return res.status(401).send("access denied.");
+    }
+    await Post.findByIdAndRemove(req.params.id);
     res.send("post deleted");
 });
-
 
 module.exports = router;

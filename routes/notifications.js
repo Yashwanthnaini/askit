@@ -38,7 +38,6 @@ router.post("/add", auth, async (req, res) => {
             notification: req.body.notification,
             user:{
                 _id: user._id,
-                name : user.name
             }
         })
         await notification.save();
