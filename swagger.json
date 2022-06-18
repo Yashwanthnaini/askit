@@ -21,6 +21,16 @@
         "description": "API for posts in the system"
       },
       {
+        "name": "Questions",
+        "description": "API for Questions in the system"
+      },
+
+      {
+        "name": "Answers",
+        "description": "API for Answers in the system"
+      },
+
+      {
         "name": "Comments",
         "description": "API for comments in the system"
       },
@@ -1025,6 +1035,411 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+      "/questions/add": {
+        "post": {
+          "tags": ["Questions"],
+          "summary": "add new Question",
+          "description": "",
+          "operationId": "addQuestion",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "headers",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Question object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Question"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Question created successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/questions/question/{id}": {
+        "get": {
+          "tags": ["Questions"],
+          "summary": "Get Question by id",
+          "description": "",
+          "operationId": "getQuestionById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be fetched",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Question"
+              }
+            },
+            "404": {
+              "description": "This Question doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/questions/{pagesize}/{pagenum}": {
+        "get": {
+          "tags": ["Questions"],
+          "summary": "Get total Questions",
+          "description": "",
+          "operationId": "getQuestions",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "pagesize",
+              "description": "size of the page like 5 for 5 posts per page",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "pagenum",
+              "description": "page number",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Question"
+              }
+            },
+            "404": {
+              "description": "No Questions found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/questions/myquestions/{pagesize}/{pagenum}": {
+        "get": {
+          "tags": ["Questions"],
+          "summary": "Get total Question of the login user",
+          "description": "",
+          "operationId": "getQuestionOfLoginUser",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "pagesize",
+              "description": "size of the page like 5 for 5 Question per page",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "pagenum",
+              "description": "page number",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "headers",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Question"
+              }
+            },
+            "404": {
+              "description": "No Question found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/questions/{id}": {
+        "put": {
+          "tags": ["Questions"],
+          "summary": "update Question by id",
+          "description": "",
+          "operationId": "updateQuestionById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Question object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Question"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Question"
+              }
+            },
+            "404": {
+              "description": "This Question doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/questions/{id}": {
+        "delete": {
+          "tags": ["Questions"],
+          "summary": "delete Question by id",
+          "description": "",
+          "operationId": "deleteQuestionById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be deleted",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "headers",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Question deleted"
+            },
+            "401": {
+              "description": "access denied."
+            },
+            "404": {
+              "description": "The Question with the given ID was not found."
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      "/answers/add": {
+        "post": {
+          "tags": ["Answers"],
+          "summary": "add new Answer",
+          "description": "",
+          "operationId": "addAnswer",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "headers",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Comment object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Answer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Answer updated successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       "/tags/add": {
         "post": {
           "tags": ["Tags"],
@@ -1103,6 +1518,39 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       "/oauth/google": {
         "get": {
           "tags": ["Oauth"],
@@ -1130,6 +1578,19 @@
           }
         }
       },
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1170,6 +1631,20 @@
           }
         }
       },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1283,6 +1758,34 @@
             "tags": [
               {"type": "string"}
             ]
+          }
+        },
+
+
+        "Question": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "data": {
+              "type": "string"
+            },
+            "tags": [
+              {"type": "string"}
+            ]
+          }
+        },
+
+        "Answer": {
+          "type": "object",
+          "properties": {
+            "Answer": {
+              "type": "string"
+            },
+            "questionId" : {
+              "type" : "string"
+            }
           }
         },
 
