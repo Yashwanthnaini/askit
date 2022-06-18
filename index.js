@@ -8,7 +8,7 @@ swaggerDocument = require("./swagger.json");
 
 
 
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(process.env.MONGO_PROD_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
