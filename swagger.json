@@ -2422,7 +2422,9 @@
             },
             "tags": {
               "type": "array",
-              "tags": "string"
+              "items": {
+                "type": "string"
+              }
             }
             
           }
@@ -2440,7 +2442,9 @@
             },
             "tags": {
               "type": "array",
-              "tags": "string"
+              "items": {
+                "type": "string"
+              }
             }
           }
         },
