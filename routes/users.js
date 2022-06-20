@@ -68,7 +68,7 @@ router.post("/register", async (req, res) => {
 
         const token = user.generateVerifyToken();
         await sendEmail(user.email, token, user.name, "verify");
-        console.log("email sent successfully");
+        
         res.json({
             message: "User created successfully. Check your email for verification link"
         });
@@ -103,8 +103,6 @@ router.get("/get/verify",auth,async (req, res) => {
 
 router.get("/verify/:token", emailVerify, async (req, res) => {
     try{
-        console.log("heelo");
-        console.log(`verify token : ${req.params.token}`);
         const user = await User.findById(req.user._id);
         if(!user){
             return res.redirect("http://localhost:3000/email/verify/invalid");
@@ -191,7 +189,7 @@ router.post("/reset",auth,async (req, res) => {
                 error: "user not found"
             });
         }
-        const token = User.generateResetToken();
+        const token = user.generateResetToken();
         await sendEmail(user.email, token, user.name, "reset");
         res.json({
             message: "password reset email sent successfully to your email"

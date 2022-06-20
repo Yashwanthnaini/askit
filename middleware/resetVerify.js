@@ -1,7 +1,6 @@
-const { decode } = require("jsonwebtoken");
 const jwt = require("jsonwebtoken");
 
-function emailVerify(req, res, next) {
+function resetVerify(req, res, next) {
     const token = req.params.token;
     
     if (!token) return res.status(401).send("Access denied. No token provided.");
@@ -16,4 +15,4 @@ function emailVerify(req, res, next) {
     }
 }
 
-module.exports = emailVerify;
+module.exports = resetVerify;
