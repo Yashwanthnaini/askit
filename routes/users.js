@@ -269,10 +269,12 @@ router.put("/edit/email",auth, async (req, res) => {
 
 
         await User.findByIdAndUpdate(req.user._id, {
-            email : req.body.name,
+            email : req.body.email,
             isVerified : false
         }, {new: true}).select("-password -__v -isAdmin");
-        res.send(" email updated successfully verify your email");
+        const token = user.generateVerifyToken();
+        await sendEmail(user.email, token, user.name, "verify");
+        res.send(" email updated successfully verification email sent to your email");
     }
     catch(ex){
         console.error(ex);
