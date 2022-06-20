@@ -132,7 +132,7 @@ router.put("/edit/title/:id", auth, async (req, res) => {
 
         if (!question) return res.status(404).send("The question with the given ID was not found.");
 
-        if(question.author._id !== req.user._id){
+        if(question.author._id != req.user._id){
             return res.status(401).send("access denied.");
         }
 
@@ -162,7 +162,7 @@ router.put("/edit/data/:id", auth, async (req, res) => {
 
         if (!question) return res.status(404).send("The question with the given ID was not found.");
 
-        if(question.author._id !== req.user._id){
+        if(question.author._id != req.user._id){
             return res.status(401).send("access denied.");
         }
 
@@ -191,7 +191,7 @@ router.put("/edit/tags/:id", auth, async (req, res) => {
 
         if (!question) return res.status(404).send("The question with the given ID was not found.");
 
-        if(question.author._id !== req.user._id){
+        if(question.author._id != req.user._id){
             return res.status(401).send("access denied.");
         }
 
@@ -220,7 +220,7 @@ try{
 
     if (!question) return res.status(404).send("The question with the given ID was not found.");
 
-    if(question.author._id !== req.user._id){
+    if(question.author._id != req.user._id){
         return res.status(401).send("access denied.");
     }
 

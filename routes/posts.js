@@ -162,7 +162,7 @@ router.put("/edit/data/:id", auth, async (req, res) => {
 
         if (!post) return res.status(404).send("The post with the given ID was not found.");
         
-        if(post.author._id !== req.user._id){
+        if(post.author._id != req.user._id){
             return res.status(401).send("access denied.");
         }
 
@@ -192,7 +192,7 @@ router.put("/edit/tags/:id", auth, async (req, res) => {
 
         if (!post) return res.status(404).send("The post with the given ID was not found.");
         
-        if(post.author._id !== req.user._id){
+        if(post.author._id != req.user._id){
             return res.status(401).send("access denied.");
         }
 
@@ -214,7 +214,7 @@ router.put("/edit/tags/:id", auth, async (req, res) => {
 router.delete("/delete/:id", auth, async (req, res) => {
     const post = await findById(req.params.id);
     if(!post) return res.status(404).send("The post with the given ID was not found.");
-    if(post.author._id !== req.user._id){
+    if(post.author._id != req.user._id){
         return res.status(401).send("access denied.");
     }
     await Post.findByIdAndRemove(req.params.id);
