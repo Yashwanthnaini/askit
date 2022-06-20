@@ -7,9 +7,9 @@ const router = express.Router();
 
 router.get("/:keyword", async(req, res)=>{
     try{
-        const users = await User.find({name: /.*${req.query.keyword}*./i}).select("name _id");
-        const posts = await Post.find({title: /.*${req.query.keyword}*./i}).select("title _id");
-        const questions = await Question.find({title: /.*${req.query.keyword}*./i}).select("title _id");
+        const users = await User.find({"name": /.*${req.query.keyword}*./i}).select("name _id");
+        const posts = await Post.find({"title": /.*${req.query.keyword}*./i}).select("title _id");
+        const questions = await Question.find({"title": /.*${req.query.keyword}*./i}).select("title _id");
         res.json({
             users : users,
             posts : posts,
