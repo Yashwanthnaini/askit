@@ -66,7 +66,7 @@ router.get("/get/myposts/:pagesize/:pagenum", auth, async(req,res)=>{
     const pagenum = req.params.pagenum
     try{
         const posts = await Post
-                            .find({"author.id" : req.user.id})
+                            .find({"author._id" : req.user._id})
                             .sort("date")
                             .select("_id title data author.name tags date")
                             .skip(pagesize*(pagenum-1))
@@ -77,7 +77,7 @@ router.get("/get/myposts/:pagesize/:pagenum", auth, async(req,res)=>{
                 totalPosts : 0
             })
         }
-        const count = await Post.countDocuments({"author.id" : req.user.id});
+        const count = await Post.countDocuments({"author._id" : req.user._id});
         res.json({
             posts : posts,
             totalPosts : count
