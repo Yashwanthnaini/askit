@@ -2421,7 +2421,8 @@
               "type": "string"
             },
             "tags": {
-              "type": "array"
+              "type": "array",
+              "tags": "string"
             }
             
           }
@@ -2438,7 +2439,8 @@
               "type": "string"
             },
             "tags": {
-              "type": "array"
+              "type": "array",
+              "tags": "string"
             }
           }
         },
