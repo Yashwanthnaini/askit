@@ -139,7 +139,7 @@ router.put("/edit/title/:id", auth, async (req, res) => {
         await Post.findByIdAndUpdate(req.params.id, {
             title: req.body.title
         }, {new: true});
-        res.send(post);
+        res.send("updated successfully");
     }
     catch(ex){
         console.error(ex);
@@ -170,7 +170,7 @@ router.put("/edit/data/:id", auth, async (req, res) => {
             data : req.body.data
         }, {new: true});
         
-        res.send(post);
+        res.send("updated successfully");
     }
     catch(ex){
         console.error(ex);
@@ -200,7 +200,7 @@ router.put("/edit/tags/:id", auth, async (req, res) => {
             tags:[req.body.tags]
         }, {new: true});
         
-        res.send(post);
+        res.send("updated successfully");
     }
     catch(ex){
         console.error(ex);
@@ -235,7 +235,7 @@ router.put("/admin/edit/title/:id", admin, async (req, res) => {
             title: req.body.title
         }, {new: true});
         if (!post) return res.status(404).send("The post with the given ID was not found.");
-        res.send(post);
+        res.send("updated successfully");
     }
     catch(ex){
         console.error(ex);
@@ -257,7 +257,7 @@ router.put("/admin/edit/data/:id", admin, async (req, res) => {
             data : req.body.data
         }, {new: true});
         if (!post) return res.status(404).send("The post with the given ID was not found.");
-        res.send(post);
+        res.send("updated successfully");
     }
     catch(ex){
         console.error(ex);
@@ -275,7 +275,7 @@ router.put("/admin/edit/tags/:id", admin, async (req, res) => {
             tags:[req.body.tags]
         }, {new: true});
         if (!post) return res.status(404).send("The post with the given ID was not found.");
-        res.send(post);
+        res.send("updated successfully");
     }
     catch(ex){
         console.error(ex);
