@@ -1,5 +1,5 @@
 const {Answer, validateAnswer } = require("../models/answerModel");
-const {Question} = require("../models/question");
+const {Question} = require("../models/questionModel");
 const auth = require("../middleware/authorization");
 const {User} = require("../models/userModel");
 const express = require("express");
