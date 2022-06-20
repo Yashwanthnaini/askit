@@ -344,7 +344,7 @@
           ],
           "parameters": [
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
