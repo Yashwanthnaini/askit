@@ -132,7 +132,7 @@ router.put("/edit/title/:id", auth, async (req, res) => {
 
         if (!post) return res.status(404).send("The post with the given ID was not found.");
 
-        if(post.author._id !== req.user._id){
+        if(post.author._id != req.user._id){
             return res.status(401).send("access denied.");
         }
         const id = mongoose.Types.ObjectId.fromString(req.params.id);
