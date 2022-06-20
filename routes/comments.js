@@ -3,6 +3,8 @@ const auth = require("../middleware/authorization");
 const {User} = require("../models/userModel");
 const {Notification} = require("../models/notificationModel");
 const {Post} = require("../models/postModel");
+const {Question} = require("../models/questionModel");
+const {Answer} = require("../models/answerModel");
 const express = require("express");
 const router = express.Router();
 
