@@ -1328,7 +1328,7 @@
       },
 
 
-      "/posts/edit/title/{id}:": {
+      "/posts/edit/title/{id}": {
         "put": {
           "tags": ["Posts"],
           "summary": "update post title by id",
@@ -1378,7 +1378,7 @@
 
 
 
-      "/posts/edit/data/{id}:": {
+      "/posts/edit/data/{id}": {
         "put": {
           "tags": ["Posts"],
           "summary": "update post data by id",
@@ -1426,7 +1426,7 @@
         }
       },
 
-      "/posts/edit/tags/{id}:": {
+      "/posts/edit/tags/{id}": {
         "put": {
           "tags": ["Posts"],
           "summary": "update post tags by id",
@@ -1476,7 +1476,7 @@
       },
 
 
-      "/posts/delete/:{id}": {
+      "/posts/delete/{id}": {
         "delete": {
           "tags": ["Posts"],
           "summary": "delete post by id",
@@ -2322,7 +2322,7 @@
 
 
 
-      "/search/{keyword}:": {
+      "/search/{keyword}": {
         "get": {
           "tags": ["Search"],
           "summary": "Get users posts questions ",
