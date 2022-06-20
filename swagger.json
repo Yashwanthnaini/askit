@@ -2420,9 +2420,10 @@
             "data": {
               "type": "string"
             },
-            "tags": [
-              {"type": "string"}
-            ]
+            "tags": {
+              "type": "array"
+            }
+            
           }
         },
 
@@ -2436,9 +2437,9 @@
             "data": {
               "type": "string"
             },
-            "tags": [
-              {"type": "string"}
-            ]
+            "tags": {
+              "type": "array"
+            }
           }
         },
 

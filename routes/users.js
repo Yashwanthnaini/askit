@@ -272,8 +272,10 @@ router.put("/edit/email",auth, async (req, res) => {
             isVerified: false,
             email: req.body.email
         }, {new: true}).select("-password -__v -isAdmin");
+        
         const token = user.generateVerifyToken();
         await sendEmail(user.email, token, user.name, "verify");
+
         res.send(newUser);
     }
     catch(ex){

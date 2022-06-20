@@ -77,7 +77,7 @@ router.get("/get/myposts/:pagesize/:pagenum", auth, async(req,res)=>{
                 totalPosts : 0
             })
         }
-        const count = await Question.countDocuments({"author.id" : req.user.id});
+        const count = await Post.countDocuments({"author.id" : req.user.id});
         res.json({
             posts : posts,
             totalPosts : count
