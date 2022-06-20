@@ -66,7 +66,7 @@ router.get("/get/myquestions/:pagesize/:pagenum", auth, async(req,res)=>{
     const pagenum = req.params.pagenum
     try{
         const questions = await Question
-                            .find({"author.id" : req.user.id})
+                            .find({"author._id" : req.user._id})
                             .sort("date")
                             .select("_id title data author.name tags date")
                             .skip(pagesize*(pagenum-1))
@@ -77,7 +77,7 @@ router.get("/get/myquestions/:pagesize/:pagenum", auth, async(req,res)=>{
                 totalquestions : 0
             })
         }
-        const count = await Question.countDocuments({"author.id" : req.user.id});
+        const count = await Question.countDocuments({"author._id" : req.user._id});
         res.json({
             questions : questions,
             totalquestions : count
@@ -128,10 +128,18 @@ router.put("/edit/title/:id", auth, async (req, res) => {
         const user = await User.findById(req.user._id);
         if (!user) return res.status(400).send("Invalid user.");
 
-        const question = await Question.findByIdAndUpdate(req.params.id, {
+        const question = await Question.findById(req.params.id);
+
+        if (!question) return res.status(404).send("The question with the given ID was not found.");
+
+        if(question.author._id !== req.user._id){
+            return res.status(401).send("access denied.");
+        }
+
+        await Question.findByIdAndUpdate(req.params.id, {
             title: req.body.title
         }, {new: true});
-        if (!question) return res.status(404).send("The question with the given ID was not found.");
+        
         res.send("updated successfully");
     }
     catch(ex){
@@ -150,11 +158,20 @@ router.put("/edit/data/:id", auth, async (req, res) => {
         const user = await User.findById(req.user._id);
         if (!user) return res.status(400).send("Invalid user.");
 
-        const question = await Question.findByIdAndUpdate(req.params.id, {
+        const question = await Question.findById(req.params.id);
+
+        if (!question) return res.status(404).send("The question with the given ID was not found.");
+
+        if(question.author._id !== req.user._id){
+            return res.status(401).send("access denied.");
+        }
+
+
+        await Question.findByIdAndUpdate(req.params.id, {
             
             data : req.body.data
         }, {new: true});
-        if (!question) return res.status(404).send("The question with the given ID was not found.");
+       
         res.send("updated successfully");
     }
     catch(ex){
@@ -170,10 +187,19 @@ router.put("/edit/tags/:id", auth, async (req, res) => {
         const user = await User.findById(req.user._id);
         if (!user) return res.status(400).send("Invalid user.");
 
-        const question = await Question.findByIdAndUpdate(req.params.id, {
+        const question = await Question.findById(req.params.id);
+
+        if (!question) return res.status(404).send("The question with the given ID was not found.");
+
+        if(question.author._id !== req.user._id){
+            return res.status(401).send("access denied.");
+        }
+
+
+        await Question.findByIdAndUpdate(req.params.id, {
             tags:[req.body.tags]
         }, {new: true});
-        if (!question) return res.status(404).send("The question with the given ID was not found.");
+       
         res.send("updated successfully");
     }
     catch(ex){
@@ -185,10 +211,32 @@ router.put("/edit/tags/:id", auth, async (req, res) => {
 });
 
 router.delete("/delete/:id", auth, async (req, res) => {
-    const question = await question.findByIdAndRemove(req.params.id);
+
+try{
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(400).send("Invalid user.");
+
+    const question = await Question.findById(req.params.id);
+
     if (!question) return res.status(404).send("The question with the given ID was not found.");
+
+    if(question.author._id !== req.user._id){
+        return res.status(401).send("access denied.");
+    }
+
+    await question.findByIdAndRemove(req.params.id);
+    
     res.send("question deleted");
+}
+catch(ex){
+    console.error(ex);
+    res.status(500).json({
+        error: "something went wrong try after some time!", 
+    });
+}
+
 });
+
 
 //admin privlagues
 

@@ -128,10 +128,17 @@ router.put("/edit/title/:id", auth, async (req, res) => {
         const user = await User.findById(req.user._id);
         if (!user) return res.status(400).send("Invalid user.");
 
-        const post = await Post.findByIdAndUpdate(req.params.id, {
+        const post = await Post.findById(req.params.id);
+
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
+
+        if(post.author._id !== req.user._id){
+            return res.status(401).send("access denied.");
+        }
+
+        await Post.findByIdAndUpdate(req.params.id, {
             title: req.body.title
         }, {new: true});
-        if (!post) return res.status(404).send("The post with the given ID was not found.");
         res.send(post);
     }
     catch(ex){
@@ -151,10 +158,18 @@ router.put("/edit/data/:id", auth, async (req, res) => {
         const user = await User.findById(req.user._id);
         if (!user) return res.status(400).send("Invalid user.");
 
-        const post = await Post.findByIdAndUpdate(req.params.id, {
+        const post = await Post.findById(req.params.id);
+
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
+        
+        if(post.author._id !== req.user._id){
+            return res.status(401).send("access denied.");
+        }
+
+        await Post.findByIdAndUpdate(req.params.id, {
             data : req.body.data
         }, {new: true});
-        if (!post) return res.status(404).send("The post with the given ID was not found.");
+        
         res.send(post);
     }
     catch(ex){
@@ -173,10 +188,18 @@ router.put("/edit/tags/:id", auth, async (req, res) => {
         const user = await User.findById(req.user._id);
         if (!user) return res.status(400).send("Invalid user.");
 
-        const post = await Post.findByIdAndUpdate(req.params.id, {
+        const post = await Post.findById(req.params.id);
+
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
+        
+        if(post.author._id !== req.user._id){
+            return res.status(401).send("access denied.");
+        }
+
+        await Post.findByIdAndUpdate(req.params.id, {
             tags:[req.body.tags]
         }, {new: true});
-        if (!post) return res.status(404).send("The post with the given ID was not found.");
+        
         res.send(post);
     }
     catch(ex){
@@ -191,7 +214,7 @@ router.put("/edit/tags/:id", auth, async (req, res) => {
 router.delete("/delete/:id", auth, async (req, res) => {
     const post = await findById(req.params.id);
     if(!post) return res.status(404).send("The post with the given ID was not found.");
-    if(post.author.name !== req.user.name){
+    if(post.author._id !== req.user._id){
         return res.status(401).send("access denied.");
     }
     await Post.findByIdAndRemove(req.params.id);
