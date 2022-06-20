@@ -422,7 +422,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -467,7 +467,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -546,7 +546,7 @@
               "type": "string"
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -592,7 +592,7 @@
               "type": "string"
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -635,7 +635,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -687,7 +687,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -749,7 +749,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -799,7 +799,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -848,7 +848,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -891,7 +891,7 @@
               "type": "string"
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -987,7 +987,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1037,7 +1037,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1082,7 +1082,7 @@
               "type": "string"
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1159,7 +1159,7 @@
           ],
           "parameters": [
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1303,7 +1303,7 @@
               "type": "string"
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1355,7 +1355,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1405,7 +1405,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1454,7 +1454,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1497,7 +1497,7 @@
               "type": "string"
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1576,7 +1576,7 @@
           ],
           "parameters": [
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1720,7 +1720,7 @@
               "type": "string"
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1814,7 +1814,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1864,7 +1864,7 @@
               "required": true
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1909,7 +1909,7 @@
               "type": "string"
             },
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -1983,7 +1983,7 @@
           ],
           "parameters": [
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -2062,7 +2062,7 @@
           ],
           "parameters": [
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -2216,7 +2216,7 @@
           ],
           "parameters": [
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
@@ -2270,7 +2270,7 @@
           ],
           "parameters": [
             {
-              "in": "headers",
+              "in": "header",
               "name": "x-auth-token",
               "description": "token to be verified",
               "required": true,
