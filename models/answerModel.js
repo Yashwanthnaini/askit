@@ -29,7 +29,7 @@ const Answer = mongoose.model("Answer", answerSchema);
 function validateAnswer(answer){
     const schema = Joi.object({
         answer : Joi.string().min(1).required(),
-        postId : Joi.objectId().required(),
+        questionId : Joi.objectId().required(),
     });
     return schema.validate(answer);
 }

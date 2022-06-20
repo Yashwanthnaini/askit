@@ -2459,7 +2459,7 @@
         "Answer": {
           "type": "object",
           "properties": {
-            "Answer": {
+            "answer": {
               "type": "string"
             },
             "questionId" : {
