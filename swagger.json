@@ -615,7 +615,7 @@
       },
 
 
-      "/users/edit/username/{id}:": {
+      "/users/edit/username/{id}": {
         "put": {
           "tags": ["Admin"],
           "summary": "update username of the user by id ",
@@ -667,7 +667,7 @@
       },
 
 
-      "/users/edit/email/{id}:": {
+      "/users/edit/email/{id}": {
         "put": {
           "tags": ["Admin"],
           "summary": "update email of the user by id ",
@@ -722,7 +722,7 @@
        
 
 
-      "/posts/admin/edit/title/{id}:": {
+      "/posts/admin/edit/title/{id}": {
         "put": {
           "tags": ["Admin"],
           "summary": "update post title by id",
@@ -772,7 +772,7 @@
 
 
 
-      "/posts/admin/edit/data/{id}:": {
+      "/posts/admin/edit/data/{id}": {
         "put": {
           "tags": ["Admin"],
           "summary": "update post data by id",
@@ -820,7 +820,7 @@
         }
       },
 
-      "/posts/admin/edit/tags/{id}:": {
+      "/posts/admin/edit/tags/{id}": {
         "put": {
           "tags": ["Admin"],
           "summary": "update post tags by id",
