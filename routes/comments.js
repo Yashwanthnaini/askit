@@ -14,15 +14,18 @@ router.post("/add", auth, async (req,res) => {
 
         const user = await User.findById(req.user._id);
         if (!user) return res.status(400).send("Invalid user.");
-        let post = null;
+        let post ;
         if(req.body.type==="post"){
             post = await Post.findById(req.body.postId);
         }
-        else{
+        else if (req.body.type==="question"){
             post = await Question.findById(req.body.postId);
         }
+        else {
+            post = await Answer.findById(req.body.PostId);
+        }
         
-        if(!post) return res.status(400).send("Invalid post");
+        if(!post) return res.status(400).send(`invalid ${req.body.type}`);
 
         const comment = new Comment ({
             comment: req.body.comment,
@@ -40,7 +43,7 @@ router.post("/add", auth, async (req,res) => {
             user : {
                 _id : post.author._id
             },
-            link : `https://askito.herokuapp.com/api/posts/${post._id}`
+            link : `https://askito.herokuapp.com/api/${req.body.type}s/get/${post._id}`
         })
         await notification.save();
         res.json({

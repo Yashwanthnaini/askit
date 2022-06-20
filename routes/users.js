@@ -9,7 +9,7 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 
-router.get("/me", auth ,async (req, res) => {
+router.get("/get/me", auth ,async (req, res) => {
     try{
         const user = await User.findById(req.user._id).select("-password -__v -isAdmin");
         if(!user){
@@ -27,7 +27,7 @@ router.get("/me", auth ,async (req, res) => {
     }
 });
 
-router.get("/user/:name", async(req, res)=>{
+router.get("/get/user/:name", async(req, res)=>{
     try{
         const user = await User.findOne({name: req.params.name}).select("-password -isAdmin -_id -__v -isVerified");
         if(!user){ 
@@ -68,7 +68,7 @@ router.post("/register", async (req, res) => {
 
         const token = user.generateVerifyToken();
         await sendEmail(user.email, token, user.name, "verify");
-
+        console.log("email sent successfully");
         res.json({
             message: "User created successfully. Check your email for verification link"
         });
@@ -83,7 +83,7 @@ router.post("/register", async (req, res) => {
     
 });
 
-router.get("/verify",auth,async (req, res) => {
+router.get("/get/verify",auth,async (req, res) => {
     try{
         const user = await User.findById(req.user._id);
         const token = user.generateVerifyToken();
@@ -103,6 +103,8 @@ router.get("/verify",auth,async (req, res) => {
 
 router.get("/verify/:token", emailVerify, async (req, res) => {
     try{
+        console.log("heelo");
+        console.log(`verify token : ${req.params.token}`);
         const user = await User.findById(req.user._id);
         if(!user){
             return res.redirect("http://localhost:3000/email/verify/invalid");
@@ -229,7 +231,7 @@ router.post("/reset/:token", resetVerify, async (req, res) => {
     }
 });
 
-router.put("/user/profile/edit/username",auth, async (req, res) => {
+router.put("/edit/username",auth, async (req, res) => {
     try{
         const {error} = validateUsername(req.body);
         if (error) return res.status(400).send(error.details[0].message);
@@ -259,7 +261,7 @@ router.put("/user/profile/edit/username",auth, async (req, res) => {
 
 });
 
-router.put("/user/profile/edit/email",auth, async (req, res) => {
+router.put("/edit/email",auth, async (req, res) => {
     try{
         const {error} = validateUserEmail(req.body);
         if (error) return res.status(400).send(error.details[0].message);
@@ -268,12 +270,11 @@ router.put("/user/profile/edit/email",auth, async (req, res) => {
         if (!user) return res.status(400).send("Invalid user.");
 
 
-        const newUser = await User.findByIdAndUpdate(req.user._id, {
+        await User.findByIdAndUpdate(req.user._id, {
             email : req.body.name,
             isVerified : false
         }, {new: true}).select("-password -__v -isAdmin");
-        
-        res.send(newUser);
+        res.send(" email updated successfully verify your email");
     }
     catch(ex){
         console.error(ex);
@@ -288,18 +289,38 @@ router.put("/user/profile/edit/email",auth, async (req, res) => {
 //admin previlages
 
 
-router.get("/get/:pagesize/:pagenum",admin, async (req, res)=> {
+router.get("/get/:pagesize/:pagenum",admin, async(req,res)=>{
     const pagesize = req.params.pagesize
     const pagenum = req.params.pagenum
-    const users = await User.find()
+    try{
+        const users = await User
+                            .find()
                             .sort("name")
-                            .select("-password -__v")
+                            .select("_id name email")
                             .skip(pagesize*(pagenum-1))
                             .limit(pagesize);
-
+        if(!users){
+            return res.json({
+                message : "No users found"
+            })
+        }
+        const count = await User.countDocuments({});
+        res.json({
+            users: users,
+            totalPosts : count
+        });                    
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
 });
 
-router.delete("/user/delete/:id" ,admin, async (req, res)=> {
+
+
+router.delete("/delete/:id" ,admin, async (req, res)=> {
     const user = await User.findByIdAndRemove(req.params.id);
     if (!user) return res.status(404).send("The user with the given ID was not found.");
     res.send("user deleted");
@@ -336,7 +357,7 @@ router.put("/edit/username/:id",admin, async (req, res) => {
 
 });
 
-router.put("/edit/email/:id",auth, async (req, res) => {
+router.put("/edit/email/:id", admin, async (req, res) => {
     try{
         const {error} = validateUserEmail(req.body);
         if (error) return res.status(400).send(error.details[0].message);
@@ -345,12 +366,12 @@ router.put("/edit/email/:id",auth, async (req, res) => {
         if (!user) return res.status(400).send("Invalid user.");
 
 
-        const newUser = await User.findByIdAndUpdate(req.user._id, {
-            email : req.body.name,
+        await User.findByIdAndUpdate(req.params._id, {
+            email : req.body.email,
             isVerified : false
         }, {new: true}).select("-password -__v -isAdmin");
         
-        res.send(newUser);
+        res.send("updated successfully");
     }
     catch(ex){
         console.error(ex);

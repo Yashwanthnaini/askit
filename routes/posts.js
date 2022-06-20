@@ -1,11 +1,12 @@
-const {Post,validatePost} = require("../models/postModel");
+const {Post,validatePost,validatePostTitle,validatePostBody} = require("../models/postModel");
 const {Comment} = require("../models/commentModel");
 const auth = require("../middleware/authorization");
+const admin = require("../middleware/admin");
 const {User} = require("../models/userModel");
 const express = require("express");
 const router = express.Router();
 
-router.get("/post/:id" , async (req, res) => {
+router.get("/get/:id" , async (req, res) => {
     try{
         const post = await Post.findById(req.params.id);
         if(!post){
@@ -30,7 +31,7 @@ router.get("/post/:id" , async (req, res) => {
 })
 
 
-router.get("/:pagesize/:pagenum", async(req,res)=>{
+router.get("/get/:pagesize/:pagenum", async(req,res)=>{
     const pagesize = req.params.pagesize
     const pagenum = req.params.pagenum
     try{
@@ -60,7 +61,7 @@ router.get("/:pagesize/:pagenum", async(req,res)=>{
 });
 
 
-router.get("/myposts/:pagesize/:pagenum", auth, async(req,res)=>{
+router.get("/get/myposts/:pagesize/:pagenum", auth, async(req,res)=>{
     const pagesize = req.params.pagesize
     const pagenum = req.params.pagenum
     try{
@@ -119,24 +120,18 @@ router.post("/add", auth, async(req, res)=>{
     }
 });
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/edit/title/:id", auth, async (req, res) => {
     try{
-        const {error} = validatePost(req.body);
+        const {error} = validatePostTitle(req.body);
         if (error) return res.status(400).send(error.details[0].message);
 
         const user = await User.findById(req.user._id);
         if (!user) return res.status(400).send("Invalid user.");
 
         const post = await Post.findByIdAndUpdate(req.params.id, {
-            title: req.body.title,
-            author: {
-                _id: user._id,
-                name: user.name
-            },
-            data : req.body.data,
-            tags:[req.body.tags]
+            title: req.body.title
         }, {new: true});
-        if (!post) return res.status(404).send("The movie with the given ID was not found.");
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
         res.send(post);
     }
     catch(ex){
@@ -148,7 +143,52 @@ router.put("/:id", auth, async (req, res) => {
 
 });
 
-router.delete("/:id", auth, async (req, res) => {
+router.put("/edit/data/:id", auth, async (req, res) => {
+    try{
+        const {error} = validatePostBody(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(400).send("Invalid user.");
+
+        const post = await Post.findByIdAndUpdate(req.params.id, {
+            data : req.body.data
+        }, {new: true});
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
+        res.send(post);
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+
+
+router.put("/edit/tags/:id", auth, async (req, res) => {
+    try{
+
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(400).send("Invalid user.");
+
+        const post = await Post.findByIdAndUpdate(req.params.id, {
+            tags:[req.body.tags]
+        }, {new: true});
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
+        res.send(post);
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+
+router.delete("/delete/:id", auth, async (req, res) => {
     const post = await findById(req.params.id);
     if(!post) return res.status(404).send("The post with the given ID was not found.");
     if(post.author.name !== req.user.name){
@@ -157,5 +197,79 @@ router.delete("/:id", auth, async (req, res) => {
     await Post.findByIdAndRemove(req.params.id);
     res.send("post deleted");
 });
+
+
+
+//admin privlagues
+
+
+router.put("/admin/edit/title/:id", admin, async (req, res) => {
+    try{
+        const {error} = validatePostTitle(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const post = await Post.findByIdAndUpdate(req.params.id, {
+            title: req.body.title
+        }, {new: true});
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
+        res.send(post);
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+
+
+
+router.put("/admin/edit/data/:id", admin, async (req, res) => {
+    try{
+        const {error} = validatePostBody(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const post = await Post.findByIdAndUpdate(req.params.id, {
+            data : req.body.data
+        }, {new: true});
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
+        res.send(post);
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+
+
+router.put("/admin/edit/tags/:id", admin, async (req, res) => {
+    try{
+        const post = await Post.findByIdAndUpdate(req.params.id, {
+            tags:[req.body.tags]
+        }, {new: true});
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
+        res.send(post);
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+
+
+router.delete("/admin/delete/:id", admin, async (req, res) => {
+    const post = await findById(req.params.id);
+    if(!post) return res.status(404).send("The post with the given ID was not found.");
+    await Post.findByIdAndRemove(req.params.id);
+    res.send("post deleted");
+});
+
 
 module.exports = router;

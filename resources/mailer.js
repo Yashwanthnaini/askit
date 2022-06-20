@@ -653,7 +653,7 @@ module.exports = async function(email,token,name,type) {
       color: #2a2a2a; font-family: "Asap", Helvetica, sans-serif; font-size: 12px;
       line-height: 150%; text-align: left; padding-top:9px; padding-right: 18px;
       padding-bottom: 9px; padding-left: 18px;' valign="top">
-                                      <a href="https://www.lingoapp.com" style="mso-line-height-rule: exactly;
+                                      <a href="" style="mso-line-height-rule: exactly;
       -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #2a2a2a;
       font-weight: normal; text-decoration: none" target="_blank" title="Lingo is the
       best way to organize, share and use all your visual assets in one place -
@@ -689,10 +689,10 @@ module.exports = async function(email,token,name,type) {
                                     <td class="mcnImageContent" style="mso-line-height-rule: exactly;
       -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-right: 0px;
       padding-left: 0px; padding-top: 0; padding-bottom: 0; text-align:center;" valign="top">
-                                      <a class="" href="https://www.lingoapp.com" style="mso-line-height-rule:
+                                      <a class="" href="" style="mso-line-height-rule:
       exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color:
       #f57153; font-weight: normal; text-decoration: none" target="_blank" title="">
-                                        <a class="" href="https://www.lingoapp.com/" style="mso-line-height-rule:
+                                        <a class="" href="" style="mso-line-height-rule:
       exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color:
       #f57153; font-weight: normal; text-decoration: none" target="_blank" title="">
                                           <img align="center" alt="Forgot your password?" class="mcnImage" src="https://static.lingoapp.com/assets/images/email/il-password-reset@2x.png" style="-ms-interpolation-mode: bicubic; border: 0; height: auto; outline: none;
@@ -801,7 +801,7 @@ module.exports = async function(email,token,name,type) {
       exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;
       font-family: 'Asap', Helvetica, sans-serif; font-size: 16px; padding-top:24px;
       padding-right:48px; padding-bottom:24px; padding-left:48px;" valign="middle">
-                                              <a class="mcnButton" href="https:askito.herokuapp.com/api/users/reset/${token}" style="mso-line-height-rule: exactly;
+                                              <a class="mcnButton" href="http://localhost:3000/resetpassword/${token}" style="mso-line-height-rule: exactly;
       -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; display: block; color: #f57153;
       font-weight: normal; text-decoration: none; font-weight: normal;letter-spacing:
       1px;line-height: 100%;text-align: center;text-decoration: none;color:

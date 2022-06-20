@@ -3,7 +3,7 @@ const router = express.Router();
 const {Tag , validateTag} = require("../models/tagModel");
 const admin = require("../middleware/admin");
 
-router.get("/", async (req, res) => {
+router.get("/get/", async (req, res) => {
     try{
         const tags = await Tag
                         .fing()

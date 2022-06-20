@@ -45,5 +45,21 @@ function validatePost(post){
     return schema.validate(post);
 }
 
+function validatePostTitle(post){
+    const schema = Joi.object({
+        title: Joi.string().min(5).max(255).required()
+    });
+    return schema.validate(post);
+}
+
+function validatePostBody(post){
+    const schema = Joi.object({
+        data: Joi.string().required(),
+    });
+    return schema.validate(post);
+}
+
 module.exports.Post = Post;
 module.exports.validatePost = validatePost;
+module.exports.validatePostTitle = validatePostTitle;
+module.exports.validatePostBody = validatePostBody;
