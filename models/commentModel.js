@@ -30,6 +30,7 @@ function validateComment(comment){
     const schema = Joi.object({
         comment : Joi.string().min(1).required(),
         postId : Joi.objectId().required(),
+        type: Joi.string().required()
     });
     return schema.validate(comment);
 }

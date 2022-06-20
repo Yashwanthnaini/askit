@@ -1,5 +1,6 @@
 const {Question,validateQuestion,validateQuestionBody,validateQuestionTitle} = require("../models/questionModel");
 const {Comment} = require("../models/commentModel");
+const {Answer} = require("../models/answerModel");
 const auth = require("../middleware/authorization");
 const admin = require("../middleware/admin");
 const {User} = require("../models/userModel");
@@ -14,11 +15,15 @@ router.get("/get/:id" , async (req, res) => {
                 message : "This question doesn't exist"
             })
         }
+        const answers = await Answer
+                                    .find({"question._id":question._id})
+                                    .select("comment author.name")
         const comments = await Comment
                                     .find({"post._id":question._id})
                                     .select("comment author.name")
         res.json({
             question : question,
+            answers: answers,
             comments : comments
         })
     }
