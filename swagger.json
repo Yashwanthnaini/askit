@@ -1770,6 +1770,13 @@
               "name": "title",
               "description": "Question title that needs to be updated",
               "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
             }
           ],
           "responses": {
