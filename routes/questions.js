@@ -224,7 +224,7 @@ try{
         return res.status(401).send("access denied.");
     }
 
-    await question.findByIdAndRemove(req.params.id);
+    await Question.findByIdAndRemove(req.params.id);
     
     res.send("question deleted");
 }
