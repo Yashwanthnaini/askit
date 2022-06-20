@@ -268,13 +268,13 @@ router.put("/edit/email",auth, async (req, res) => {
         if (!user) return res.status(400).send("Invalid user.");
 
 
-        await User.findByIdAndUpdate(req.user._id, {
-            email : req.body.email,
-            isVerified : false
+        const newUser = await User.findByIdAndUpdate(req.user._id, {
+            isVerified: false,
+            email: req.body.email
         }, {new: true}).select("-password -__v -isAdmin");
         const token = user.generateVerifyToken();
         await sendEmail(user.email, token, user.name, "verify");
-        res.send(" email updated successfully verification email sent to your email");
+        res.send(newUser);
     }
     catch(ex){
         console.error(ex);
