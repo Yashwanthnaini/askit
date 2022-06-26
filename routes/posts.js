@@ -102,7 +102,8 @@ router.post("/add", auth, async(req, res)=>{
             title: req.body.title,
             author: {
                 _id: user._id,
-                name: user.name
+                name: user.name,
+                email: user.email
             },
             data : req.body.data,
             tags : req.body.tags
