@@ -2597,6 +2597,40 @@
         }
       },
 
+      "/answers/update/iscorrect/{id}": {
+        "put": {
+          "tags": ["Answers"],
+          "summary": "update Answers iscorrect",
+          "description": "",
+          "operationId": "updateAnswersIscorrect",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
 
 
 
