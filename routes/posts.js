@@ -105,7 +105,7 @@ router.post("/add", auth, async(req, res)=>{
                 name: user.name
             },
             data : req.body.data,
-            tags:[req.body.tags]
+            tags : req.body.tags
         });
         await post.save();
         res.json({
@@ -143,7 +143,7 @@ router.put ("/update/:id", auth, async (req, res) => {
                 email: user.email
             },
             data : req.body.data,
-            tags:[req.body.tags]
+            tags:req.body.tags
 
         }, {new: true});
         res.send("updated successfully");

@@ -111,7 +111,7 @@ router.post("/add", auth, async(req, res)=>{
                 email:user.email
             },
             data : req.body.data,
-            tags:[req.body.tags]
+            tags : req.body.tags
         });
         await question.save();
         res.json({
@@ -149,7 +149,7 @@ router.put ("/update/:id", auth, async (req, res) => {
                 email: user.email
             },
             data : req.body.data,
-            tags:[req.body.tags]
+            tags: req.body.tags
 
         }, {new: true});
         res.send("updated successfully");
@@ -239,7 +239,7 @@ router.put("/edit/tags/:id", auth, async (req, res) => {
 
 
         await Question.findByIdAndUpdate(req.params.id, {
-            tags:[req.body.tags]
+            tags:req.body.tags
         }, {new: true});
        
         res.send("updated successfully");
