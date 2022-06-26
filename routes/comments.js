@@ -1,5 +1,6 @@
 const {Comment,validateComment} = require("../models/commentModel");
 const auth = require("../middleware/authorization");
+const admin = require("../middleware/admin");
 const {User} = require("../models/userModel");
 const {Notification} = require("../models/notificationModel");
 const {Post} = require("../models/postModel");
@@ -89,6 +90,52 @@ router.put ("/update/:id", auth, async (req, res) => {
             error: "something went wrong try after some time!", 
         });
     }
+})
+
+router.delete("/delete/:id", auth, async (req, res) => {
+    const comment = await Comment.findById(req.params.id);
+
+    if(!comment) return res.status(400).send("The comment with the given ID was not found.");
+
+    if(comment.author._id != req.user._id){
+        return res.status(401).send("access denied.");
+    }
+    await Comment.findByIdAndRemove(req.params.id);
+    res.send("comment deleted");
+});
+
+//admin privlagues
+
+router.put ("/admin/update/:id", admin, async (req, res) => {
+    try{
+        const {error} = validateComment(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const comment = await Comment.findById(req.params.id);
+        if (!comment) return res.status(404).send("The comment with the given ID was not found.");
+        
+        await Comment.findByIdAndUpdate(req.params.id, {
+            comment: req.body.comment
+        }, {new: true});
+        res.send("updated successfully");
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+})
+
+
+router.delete("/admin/delete/:id" ,admin, async (req, res)=> {
+    const comment = await Comment.findByIdAndRemove(req.params.id);
+    if (!comment) return res.status(404).json({
+        error : "The comment with the given ID was not found."
+    });
+    res.json({
+        message : "comment deleted successfully"
+    });
 })
 
 module.exports = router;

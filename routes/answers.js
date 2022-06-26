@@ -1,6 +1,7 @@
 const {Answer, validateAnswer } = require("../models/answerModel");
 const {Question} = require("../models/questionModel");
 const {Notification} = require("../models/notificationModel");
+const admin = require("../middleware/admin");
 const sendEmail = require("../resources/mailer");
 const auth = require("../middleware/authorization");
 const {User} = require("../models/userModel");
@@ -106,5 +107,73 @@ router.put ("/update/iscorrect/:id", auth, async (req, res) => {
         });
     }
 })
+
+router.delete("/delete/:id", auth, async (req, res) => {
+    const answer = await Answer.findById(req.params.id);
+
+    if(!answer) return res.status(400).send("The Answer with the given ID was not found.");
+
+    if(answer.author._id != req.user._id){
+        return res.status(401).send("access denied.");
+    }
+    await Answer.findByIdAndRemove(req.params.id);
+    res.send("Answer deleted");
+});
+
+//admin previlages
+
+router.put ("/admin/update/:id", admin, async (req, res) => {
+    try{
+        const {error} = validateAnswer(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const answer = await Answer.findById(req.params.id);
+        if (!answer) return res.status(404).send("The answer with the given ID was not found.");
+        
+        await Answer.findByIdAndUpdate(req.params.id, {
+            answer: req.body.answer 
+        }, {new: true});
+        res.send("updated successfully");
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+})
+
+
+router.put("/admin/update/iscorrect/:id", admin, async (req, res) => {
+    try{
+
+        const answer = await Answer.findById(req.params.id);
+        if (!answer) return res.status(404).send("The answer with the given ID was not found.");
+
+        await Answer.findByIdAndUpdate(req.params.id, {
+            isCorrect : true
+        }, {new: true});
+        res.send("updated successfully");
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+})
+
+
+
+router.delete("/admin/delete/:id" ,admin, async (req, res)=> {
+    const answer = await Answer.findByIdAndRemove(req.params.id);
+    if (!answer) return res.status(404).json({
+        error : "The Answer with the given ID was not found."
+    });
+    res.json({
+        message : "answer deleted successfully"
+    });
+})
+
 
 module.exports = router;

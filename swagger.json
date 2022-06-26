@@ -919,6 +919,229 @@
       },
 
 
+      "/comments/admin/update/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update comment",
+          "description": "",
+          "operationId": "updateComment",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "types are answer,question,post",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Comment"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "comment updated successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/admin/comments/delete/{id}": {
+        "delete": {
+          "tags": ["Admin"],
+          "summary": "delete comment by id",
+          "description": "",
+          "operationId": "deleteCommentById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of comment to be deleted",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+
+          ],
+          "responses": {
+            "200": {
+              "description": "comment deleted"
+            },
+            "404": {
+              "description": "The comment with the given ID was not found."
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/answers/admin/update/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "Update Answer",
+          "description": "",
+          "operationId": "UpdateAnswer",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Answer object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Answer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Answer updated successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+      "/answers/admin/update/iscorrect/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update Answers iscorrect",
+          "description": "",
+          "operationId": "updateAnswersIscorrect",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+      
+
+
+      "/admin/answers/delete/{id}": {
+        "delete": {
+          "tags": ["Admin"],
+          "summary": "delete answer by id",
+          "description": "",
+          "operationId": "deleteAnswerById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of answer to be deleted",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+
+          ],
+          "responses": {
+            "200": {
+              "description": "Answer deleted"
+            },
+            "404": {
+              "description": "The Answer with the given ID was not found."
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1562,6 +1785,10 @@
 
 
 
+      
+
+
+
 
 
 
@@ -1643,7 +1870,7 @@
 
 
       "/answers/update/{id}": {
-        "post": {
+        "put": {
           "tags": ["Answers"],
           "summary": "Update Answer",
           "description": "",
@@ -1721,6 +1948,49 @@
         }
       },
 
+
+      "/answers/delete/{id}": {
+        "delete": {
+          "tags": ["Answers"],
+          "summary": "delete answer by id",
+          "description": "",
+          "operationId": "deleteAnswerById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of answer to be deleted",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+
+          ],
+          "responses": {
+            "200": {
+              "description": "Answer deleted"
+            },
+            "404": {
+              "description": "The Answer with the given ID was not found."
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
 
 
 
@@ -2078,6 +2348,50 @@
             },
             "400": {
               "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/comments/delete/{id}": {
+        "delete": {
+          "tags": ["Comments"],
+          "summary": "delete comment by id",
+          "description": "",
+          "operationId": "deleteCommentById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of comment to be deleted",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+
+          ],
+          "responses": {
+            "200": {
+              "description": "comment deleted"
+            },
+            "404": {
+              "description": "The comment with the given ID was not found."
             },
             "500": {
               "description": "something went wrong try after some time!"
