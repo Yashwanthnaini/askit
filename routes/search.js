@@ -28,7 +28,7 @@ router.get("/:keyword", async(req, res)=>{
 
 router.post("/posts/tags", async(req, res)=>{
     try{
-        const posts = await Post.find({ tags: { $in: req.body.tags }}).select("title _id tags");
+        const posts = await Post.find({ tags: { $in: req.body.tags[0] }}).select("title _id tags");
         res.json({
             posts : posts
         });
@@ -43,7 +43,7 @@ router.post("/posts/tags", async(req, res)=>{
 
 router.post("/questions/tags", async(req, res)=>{
     try{
-        const questions = await Question.find({ tags: { $in: req.body.tags }}).select("title _id tags");
+        const questions = await Question.find({ tags: { $in: req.body.tags[0] }}).select("title _id tags");
         res.json({
             questions : questions
         });
