@@ -402,6 +402,55 @@
       },
 
 
+
+
+      "/users/update": {
+        "put": {
+          "tags": ["Users"],
+          "summary": "update profile of the current user",
+          "description": "",
+          "operationId": "updateUserProfile",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/User"
+              }
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+
       "/users/edit/username": {
         "put": {
           "tags": ["Users"],
@@ -741,6 +790,50 @@
         }
       },
 
+      "/users/admin/update": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update profile of the user by id",
+          "description": "",
+          "operationId": "updateUserProfileById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/User"
+              }
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
 
       "/users/edit/username/{id}": {
         "put": {
@@ -1001,6 +1094,57 @@
 
 
 
+      "/posts/admin/update/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update post",
+          "description": "",
+          "operationId": "updatePostById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Post object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Post"
+              }
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This post doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
 
 
       "/posts/admin/edit/data/{id}": {
@@ -1147,6 +1291,57 @@
       },
 
 
+
+      "/questions/admin/update/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update Question",
+          "description": "",
+          "operationId": "updateQuestionById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Question object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Question"
+              }
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This Question doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
 
 
       "/admin/questions/edit/title/{id}": {
@@ -1550,6 +1745,59 @@
             },
             "404": {
               "description": "No posts found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/posts/update/{id}": {
+        "put": {
+          "tags": ["Posts"],
+          "summary": "update post",
+          "description": "",
+          "operationId": "updatePostById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Post object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Post"
+              }
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This post doesn't exist"
             },
             "500": {
               "description": "something went wrong try after some time!"
@@ -1975,6 +2223,59 @@
       },
 
 
+      "/questions/update/{id}": {
+        "put": {
+          "tags": ["Questions"],
+          "summary": "update Question",
+          "description": "",
+          "operationId": "updateQuestion",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Question object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Question"
+              }
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+              
+            },
+            "404": {
+              "description": "This Question doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
       "/questions/edit/title/{id}": {
         "put": {
           "tags": ["Questions"],
@@ -2229,7 +2530,53 @@
             {
               "in": "body",
               "name": "body",
-              "description": "Comment object that needs to be added to the system",
+              "description": "Answer object that needs to be added to the system",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Answer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Answer updated successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/answers/update/{id}": {
+        "post": {
+          "tags": ["Answers"],
+          "summary": "Update Answer",
+          "description": "",
+          "operationId": "UpdateAnswer",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Answer object that needs to be added to the system",
               "required": true,
               "schema": {
               "$ref": "#/definitions/Answer"
@@ -2479,6 +2826,44 @@
 
 
 
+      "/notifications/update/noticed/{id}": {
+        "put": {
+          "tags": ["Notifications"],
+          "summary": "update Notification noticed",
+          "description": "",
+          "operationId": "updateNotificationNoticed",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+
 
 
 
@@ -2499,6 +2884,52 @@
           "summary": "add new comment",
           "description": "",
           "operationId": "addComment",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "types are answer,question,post",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Comment"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "comment updated successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/comments/update/{id}": {
+        "put": {
+          "tags": ["Comments"],
+          "summary": "update comment",
+          "description": "",
+          "operationId": "updateComment",
           "consumes": [
             "application/json"
           ],
@@ -2615,7 +3046,43 @@
             },
             "password": {
               "type": "string"
+            },
+            "dob": {
+              "type":"date",
+              "required":false
+            },
+            "gender": {
+              "type":"string",
+              "required":false
+            },
+            "expertIn": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "required":false
+            } ,
+            "bio": {
+              "type":"string",
+              "required":false
+            },
+            "url": {
+              "type":"string",
+              "required":false
+            },
+            "twitterUrl": {
+              "type":"string",
+              "required":false
+            },
+            "instagramUrl": {
+              "type":"string",
+              "required":false
+            },
+            "location": {
+              "type":"string",
+              "required":false
             }
+            
           }
         },
         "Login":{

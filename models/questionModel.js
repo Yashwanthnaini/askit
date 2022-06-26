@@ -20,6 +20,14 @@ const questionSchema = new mongoose.Schema({
                 required: true,
                 minlength: 5,
                 maxlength: 50
+            },
+            email:{
+                type: String,
+                required: true,
+                minlength: 7,
+                maxlength: 255,
+                unique: true,
+                trim: true
             }
         }),
             required: true

@@ -120,6 +120,44 @@ router.post("/add", auth, async(req, res)=>{
     }
 });
 
+router.put ("/update/:id", auth, async (req, res) => {
+    try{
+        const {error} = validatePost(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(400).send("Invalid user.");
+
+        const post = await Post.findById(req.params.id);
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
+
+        if(post.author._id != req.user._id){
+            return res.status(401).send("access denied.");
+        }
+        
+        await Post.findByIdAndUpdate(req.params.id, {
+            title: req.body.title,
+            author: {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+            },
+            data : req.body.data,
+            tags:[req.body.tags]
+
+        }, {new: true});
+        res.send("updated successfully");
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+})
+
+
+
 router.put("/edit/title/:id", auth, async (req, res) => {
     try{
         const {error} = validatePostTitle(req.body);
@@ -226,6 +264,36 @@ router.delete("/delete/:id", auth, async (req, res) => {
 
 
 //admin privlagues
+
+
+router.put ("/admin/update/:id", admin, async (req, res) => {
+    try{
+        const {error} = validatePost(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const post = await Post.findById(req.params.id);
+        if (!post) return res.status(404).send("The post with the given ID was not found.");
+        
+        await Post.findByIdAndUpdate(req.params.id, {
+            title: req.body.title,
+            author: {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+            },
+            data : req.body.data,
+            tags:[req.body.tags]
+
+        }, {new: true});
+        res.send("updated successfully");
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+})
 
 
 router.put("/admin/edit/title/:id", admin, async (req, res) => {

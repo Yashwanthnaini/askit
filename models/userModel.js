@@ -46,7 +46,28 @@ const userSchema = new mongoose.Schema({
     expertIn:{
         type: Array,
         default: null
+    },
+    bio:{
+        type: String,
+        default: null
+    },
+    url:{
+        type: String,
+        default: null
+    },
+    twitterUrl:{
+        type:String,
+        default:null
+    },
+    instagramUrl:{
+        type: String,
+        default: null
+    },
+    location:{
+        type: String,
+        default: null
     }
+    
 });
 
 userSchema.methods.generateAuthToken = function(){
@@ -72,6 +93,15 @@ function validateUser(user){
         name: Joi.string().min(5).max(50).required(),
         email: Joi.string().min(5).max(255).required().email(),
         password: Joi.string().min(5).max(255).required(),
+        dob: Joi.date().optional(),
+        gender: Joi.string().optional(),
+        expertIn: Joi.array().items(Joi.string()).optional(),
+        bio: Joi.string().optional(),
+        url: Joi.string().optional(),
+        twitterUrl: Joi.string().optional(),
+        instagramUrl: Joi.string().optional(),
+        location: Joi.string().optional()
+
     });
     return schema.validate(user);
 }

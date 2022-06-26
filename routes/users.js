@@ -29,7 +29,7 @@ router.get("/get/me", auth ,async (req, res) => {
 
 router.get("/get/user/:name", async(req, res)=>{
     try{
-        const user = await User.findOne({name: req.params.name}).select("-password -isAdmin -_id -__v -isVerified");
+        const user = await User.findOne({name: req.params.name}).select("-password -isAdmin -_id -__v -isVerified ");
         if (!user) return res.status(400).json({
             error: "invalid user"
         });
@@ -225,6 +225,54 @@ router.post("/reset/:token", resetVerify, async (req, res) => {
     }
 });
 
+
+router.put("/update",auth, async (req, res) => {
+    try{
+        const {error} = validateUser(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
+
+        let username = await User.findOne({name: req.body.name});
+        if(username){
+            return res.status(400).json({
+                error: "try different username"
+            });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const password = await bcrypt.hash(req.body.password, salt);
+
+        await User.findByIdAndUpdate(req.user._id, {
+            name: req.body.name,
+            email: req.body.email,
+            password: password,
+            dob: req.body.dob,
+            gender: req.body.gender,
+            expertIn: [req.body.expertIn],
+            bio: req.body.bio,
+            url: req.body.url,
+            twitterUrl: req.body.twitterUrl,
+            instagramUrl: req.body.instagramUrl,
+            location: req.body.location
+        }, {new: true});
+        
+        res.json({
+            message : "updated successfully"
+        });
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+
 router.put("/edit/username",auth, async (req, res) => {
     try{
         const {error} = validateUsername(req.body);
@@ -402,6 +450,48 @@ router.get("/get/:pagesize/:pagenum",admin, async(req,res)=>{
     }
 });
 
+
+router.put("/admin/update", admin, async (req, res) => {
+    try{
+        const {error} = validateUser(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        let username = await User.findOne({name: req.body.name});
+        if(username){
+            return res.status(400).json({
+                error: "try different username"
+            });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const password = await bcrypt.hash(req.body.password, salt);
+
+        await User.findByIdAndUpdate(req.user._id, {
+            name: req.body.name,
+            email: req.body.email,
+            password: password,
+            dob: req.body.dob,
+            gender: req.body.gender,
+            expertIn: [req.body.expertIn],
+            bio: req.body.bio,
+            url: req.body.url,
+            twitterUrl: req.body.twitterUrl,
+            instagramUrl: req.body.instagramUrl,
+            location: req.body.location
+        }, {new: true});
+        
+        res.json({
+            message : "updated successfully"
+        });
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
 
 
 router.delete("/delete/:id" ,admin, async (req, res)=> {

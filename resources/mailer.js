@@ -12,7 +12,7 @@ module.exports = async function(email,token,name,type) {
     });
     const senderAddress = "nainiyashwanth@gmail.com";
     var toAddress = email;
-    if(type === "verify"){
+    if(type == "verify"){
       var subject = "Verify your email";
       var body_html = `
       <!doctype html>
@@ -361,7 +361,7 @@ module.exports = async function(email,token,name,type) {
         </html>
       `;
     }
-    else{
+    else if(type == "reset"){
       var subject = "Reset your password";
       var body_html = `
       <!DOCTYPE html>
@@ -969,6 +969,16 @@ module.exports = async function(email,token,name,type) {
       </html>
 
       `;
+    }
+    else if(type == "answer"){
+      var subject = "Solution Received";
+      var body_html = `
+      <!DOCTYPE> 
+      <html>
+        <body>
+          <p> Hi , ${name} some one answered to your question : </p> <b><a herf="https://askito.herokuapp.com/questions/get/${token}">click here</a></b>
+        </body>
+      </html>`;
     }
 
     // Specify the fields in the email.

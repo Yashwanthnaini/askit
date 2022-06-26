@@ -19,9 +19,15 @@ const answerSchema = new mongoose.Schema({
     },
     question: {
         type: new mongoose.Schema({
-            
+            author_id:{
+                type: mongoose.Schema.Types.ObjectId
+            }
         }),
         required: true
+    },
+    isCorrect: {
+        type: Boolean,
+        default: false
     }
 });
 const Answer = mongoose.model("Answer", answerSchema);

@@ -107,7 +107,8 @@ router.post("/add", auth, async(req, res)=>{
             title: req.body.title,
             author: {
                 _id: user._id,
-                name: user.name
+                name: user.name,
+                email:user.email
             },
             data : req.body.data,
             tags:[req.body.tags]
@@ -124,6 +125,42 @@ router.post("/add", auth, async(req, res)=>{
         });
     }
 });
+
+router.put ("/update/:id", auth, async (req, res) => {
+    try{
+        const {error} = validateQuestion(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(400).send("Invalid user.");
+
+        const question = await Question.findById(req.params.id);
+        if (!question) return res.status(400).send("The Question with the given ID was not found.");
+
+        if(question.author._id != req.user._id){
+            return res.status(401).send("access denied.");
+        }
+        
+        await Question.findByIdAndUpdate(req.params.id, {
+            title: req.body.title,
+            author: {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+            },
+            data : req.body.data,
+            tags:[req.body.tags]
+
+        }, {new: true});
+        res.send("updated successfully");
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+})
 
 router.put("/edit/title/:id", auth, async (req, res) => {
     try{
@@ -244,6 +281,36 @@ catch(ex){
 
 
 //admin privlagues
+
+
+router.put ("/admin/update/:id", admin, async (req, res) => {
+    try{
+        const {error} = validateQuestion(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const question = await Question.findById(req.params.id);
+        if (!question) return res.status(400).send("The Question with the given ID was not found.");
+        
+        await Question.findByIdAndUpdate(req.params.id, {
+            title: req.body.title,
+            author: {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+            },
+            data : req.body.data,
+            tags:[req.body.tags]
+
+        }, {new: true});
+        res.send("updated successfully");
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+})
 
 router.put("/admin/edit/title/:id", admin, async (req, res) => {
     try{

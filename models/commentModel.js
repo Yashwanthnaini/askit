@@ -19,7 +19,7 @@ const commentSchema = new mongoose.Schema({
     },
     post: {
         type: new mongoose.Schema({
-            
+            author_id: mongoose.Schema.Types.ObjectId
         }),
         required: true
     }
