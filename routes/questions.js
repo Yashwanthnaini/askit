@@ -17,10 +17,10 @@ router.get("/get/:id" , async (req, res) => {
         }
         const answers = await Answer
                                     .find({"question._id":question._id})
-                                    .select("answer author.name")
+                                    .select("answer author.name author._id")
         const comments = await Comment
                                     .find({"post._id":question._id})
-                                    .select("comment author.name")
+                                    .select("comment author.name author._id")
         res.json({
             question : question,
             answers: answers,
