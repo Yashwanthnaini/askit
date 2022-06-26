@@ -449,6 +449,50 @@
       },
 
 
+
+
+      "/users/edit/username": {
+        "put": {
+          "tags": ["Users"],
+          "summary": "update username of the current user",
+          "description": "",
+          "operationId": "updateUsername",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "name",
+              "description": "name of the user that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
       "/users/edit/email": {
         "put": {
           "tags": ["Users"],
@@ -492,6 +536,133 @@
       },
 
 
+
+
+      "/users/edit/dob": {
+        "put": {
+          "tags": ["Users"],
+          "summary": "update date of birth of the current user",
+          "description": "",
+          "operationId": "updateDOB",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "dob",
+              "type": "date",
+              "description": "dob that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+      "/users/edit/gender": {
+        "put": {
+          "tags": ["Users"],
+          "summary": "update gender of the current user",
+          "description": "",
+          "operationId": "updateGender",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "gender",
+              "description": "gender that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/users/edit/expertin": {
+        "put": {
+          "tags": ["Users"],
+          "summary": "update expertIn of the current user",
+          "description": "",
+          "operationId": "updateExperIn",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "expertIn",
+              "description": "expertIn array that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
 
 
 
@@ -664,6 +835,58 @@
       },
 
 
+      "/users/edit/username/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update username of the user by id ",
+          "description": "",
+          "operationId": "updateUsername",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "name",
+              "description": "name of the user that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of the user that needs to be updated ",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
       "/users/edit/email/{id}": {
         "put": {
           "tags": ["Admin"],
@@ -718,7 +941,159 @@
          
        
 
-    
+
+      "/posts/admin/edit/title/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update post title by id",
+          "description": "",
+          "operationId": "updatePostTitleById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "title",
+              "description": "Post title that needs to be updated",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This post doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/users/edit/dob/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update dob of the user by id ",
+          "description": "",
+          "operationId": "updateDOB",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "dob",
+              "type":"date",
+              "description": "dob that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of the user that needs to be updated ",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/users/edit/gender/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update gender of the user by id ",
+          "description": "",
+          "operationId": "updateGender",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "gender",
+              "type":"string",
+              "description": "gender that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of the user that needs to be updated ",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
       "/posts/admin/update/{id}": {
         "put": {
           "tags": ["Admin"],
@@ -770,6 +1145,104 @@
         }
       },
 
+
+
+      "/posts/admin/edit/data/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update post data by id",
+          "description": "",
+          "operationId": "updatePostDataById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "data",
+              "description": "Post data that needs to be updated",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This post doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+      "/posts/admin/edit/tags/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update post tags by id",
+          "description": "",
+          "operationId": "updatePostTagsById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "tags",
+              "type": "array",
+              "description": "Post tags that needs to be updated",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This post doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
 
 
       "/posts/admin/delete/:{id}": {
@@ -871,6 +1344,147 @@
       },
 
 
+      "/admin/questions/edit/title/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update Question title by id",
+          "description": "",
+          "operationId": "updateQuestionTitleById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "title",
+              "description": "Question title that needs to be updated",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+              
+            },
+            "404": {
+              "description": "This Question doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+      "/admin/questions/edit/data/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update Question data by id",
+          "description": "",
+          "operationId": "updateQuestionDataById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "title",
+              "description": "Question boby that needs to be updated",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+              
+            },
+            "404": {
+              "description": "This Question doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/admin/questions/edit/tags/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update Question tags by id",
+          "description": "",
+          "operationId": "updateQuestionTagsById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "tags",
+              "description": "tags array",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+              
+            },
+            "404": {
+              "description": "This Question doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
 
 
       "/admin/questions/delete/{id}": {
@@ -917,6 +1531,9 @@
           }
         }
       },
+
+
+
 
 
 
@@ -1190,7 +1807,152 @@
       },
 
 
-      
+      "/posts/edit/title/{id}": {
+        "put": {
+          "tags": ["Posts"],
+          "summary": "update post title by id",
+          "description": "",
+          "operationId": "updatePostTitleById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "title",
+              "description": "Post title that needs to be updated",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This post doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/posts/edit/data/{id}": {
+        "put": {
+          "tags": ["Posts"],
+          "summary": "update post data by id",
+          "description": "",
+          "operationId": "updatePostDataById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "data",
+              "description": "Post data that needs to be updated",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This post doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+      "/posts/edit/tags/{id}": {
+        "put": {
+          "tags": ["Posts"],
+          "summary": "update post tags by id",
+          "description": "",
+          "operationId": "updatePostTagsById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of post to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "tags",
+              "description": "Post tags that needs to be updated",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This post doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
 
       "/posts/delete/{id}": {
         "delete": {
@@ -1489,6 +2251,155 @@
               "schema": {
               "$ref": "#/definitions/Question"
               }
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+              
+            },
+            "404": {
+              "description": "This Question doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/questions/edit/title/{id}": {
+        "put": {
+          "tags": ["Questions"],
+          "summary": "update Question title by id",
+          "description": "",
+          "operationId": "updateQuestionTitleById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "title",
+              "description": "Question title that needs to be updated",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+              
+            },
+            "404": {
+              "description": "This Question doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+      "/questions/edit/data/{id}": {
+        "put": {
+          "tags": ["Questions"],
+          "summary": "update Question data by id",
+          "description": "",
+          "operationId": "updateQuestionDataById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "title",
+              "description": "Question boby that needs to be updated",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+              
+            },
+            "404": {
+              "description": "This Question doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/questions/edit/tags/{id}": {
+        "put": {
+          "tags": ["Questions"],
+          "summary": "update Question tags by id",
+          "description": "",
+          "operationId": "updateQuestionTagsById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of Question to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "tags",
+              "description": "tags array",
+              "required": true
             },
             {
               "in": "header",
@@ -1861,6 +2772,11 @@
 
 
 
+
+
+
+
+
       "/oauth/google": {
         "get": {
           "tags": ["Oauth"],
@@ -2144,86 +3060,6 @@
             }
           }
         }
-      },
-      "/search/posts/tags": {
-        "post": {
-          "tags": ["Search"],
-          "summary": "Get posts by tags ",
-          "description": "",
-          "operationId": "getPostsByTags",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "tags array",
-              "required": true,
-              "schema": {
-              "$ref": "#/definitions/TagsArray"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "schema": {
-                "$ref": "#/definitions/Post"
-              }
-            },
-            "404": {
-              "description": "No data found"
-            },
-            "500": {
-              "description": "something went wrong try after some time!"
-            }
-          }
-        }
-      },
-
-
-      "/search/questions/tags": {
-        "post": {
-          "tags": ["Search"],
-          "summary": "Get questions by tags ",
-          "description": "",
-          "operationId": "getQuestionsByTags",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "tags array",
-              "required": true,
-              "schema": {
-              "$ref": "#/definitions/TagsArray"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "schema": {
-                "$ref": "#/definitions/Post"
-              }
-            },
-            "404": {
-              "description": "No data found"
-            },
-            "500": {
-              "description": "something went wrong try after some time!"
-            }
-          }
-        }
       }
 
 
@@ -2411,17 +3247,6 @@
             },
             "questions" : {
               "type" : "object"
-            }
-          }
-        },
-        "TagsArray": {
-          "type": "object",
-          "properties": {
-           "tags": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
             }
           }
         }

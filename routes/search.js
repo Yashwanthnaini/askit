@@ -25,4 +25,35 @@ router.get("/:keyword", async(req, res)=>{
     }
 });
 
+
+router.post("/posts/tags", async(req, res)=>{
+    try{
+        const posts = await Post.find({ tags: { $in: req.body.tags }}).select("title _id tags");
+        res.json({
+            posts : posts
+        });
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+});
+
+router.post("/questions/tags", async(req, res)=>{
+    try{
+        const questions = await Question.find({ tags: { $in: req.body.tags }}).select("title _id tags");
+        res.json({
+            questions : questions
+        });
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+});
+
 module.exports = router;
