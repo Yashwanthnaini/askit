@@ -1,4 +1,4 @@
-const {User, validateUser,validateLogin,validateUsername,validateUserEmail,validateUserPassword} = require("../models/userModel");
+const {User, validateUser, validateLogin, validateUsername, validateUserEmail, validateUserPassword, validateUserDOB, validateUserGender} = require("../models/userModel");
 const auth = require("../middleware/authorization");
 const emailVerify = require("../middleware/emailVerify");
 const resetVerify = require("../middleware/resetVerify");
@@ -14,7 +14,7 @@ router.get("/get/me", auth ,async (req, res) => {
         const user = await User.findById(req.user._id).select("-password -__v -isAdmin");
         if(!user){
             return res.json({
-                message : "invalid token"
+                error : "invalid token"
             })
         }
         res.send(user);
@@ -30,11 +30,10 @@ router.get("/get/me", auth ,async (req, res) => {
 router.get("/get/user/:name", async(req, res)=>{
     try{
         const user = await User.findOne({name: req.params.name}).select("-password -isAdmin -_id -__v -isVerified");
-        if(!user){ 
-           return res.status(404).json({
-                error: "user not found"
-           });
-        }
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
+
         res.send(user);
     }
     catch(ex){
@@ -162,11 +161,10 @@ router.post("/forgot",async (req, res) => {
 
         const email = req.body.email;
         const user = await User.findOne({email: email});
-        if(!user){
-            return res.status(404).json({
-                error: "user not found"
-            });
-        }
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
+
         const token = user.generateResetToken();
         await sendEmail(user.email, token, user.name, "reset");
         res.json({
@@ -184,11 +182,10 @@ router.post("/forgot",async (req, res) => {
 router.post("/reset",auth,async (req, res) => {
     try{
         const user = await User.findById(req.user._id);
-        if(!user){
-            return res.status(404).json({
-                error: "user not found"
-            });
-        }
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
+
         const token = user.generateResetToken();
         await sendEmail(user.email, token, user.name, "reset");
         res.json({
@@ -209,11 +206,10 @@ router.post("/reset/:token", resetVerify, async (req, res) => {
         if (error) return res.status(400).send(error.details[0].message);
         
         const user = await User.findById(req.user._id);
-        if(!user){
-            return res.status(404).json({
-                error: "user not found"
-            });
-        }
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
+
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(req.body.password, salt);
         await user.save();
@@ -235,7 +231,9 @@ router.put("/edit/username",auth, async (req, res) => {
         if (error) return res.status(400).send(error.details[0].message);
 
         const user = await User.findById(req.user._id);
-        if (!user) return res.status(400).send("Invalid user.");
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
 
         let username = await User.findOne({name: req.body.name});
         if(username){
@@ -244,11 +242,13 @@ router.put("/edit/username",auth, async (req, res) => {
             });
         }
 
-        const newUser = await User.findByIdAndUpdate(req.user._id, {
+        await User.findByIdAndUpdate(req.user._id, {
             name: req.body.name
-        }, {new: true}).select("-password -__v -isAdmin");
+        }, {new: true});
         
-        res.send(newUser);
+        res.json({
+            message : "updated successfully"
+        });
     }
     catch(ex){
         console.error(ex);
@@ -265,18 +265,100 @@ router.put("/edit/email",auth, async (req, res) => {
         if (error) return res.status(400).send(error.details[0].message);
 
         const user = await User.findById(req.user._id);
-        if (!user) return res.status(400).send("Invalid user.");
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
 
-
-        const newUser = await User.findByIdAndUpdate(req.user._id, {
+        await User.findByIdAndUpdate(req.user._id, {
             isVerified: false,
             email: req.body.email
-        }, {new: true}).select("-password -__v -isAdmin");
+        }, {new: true});
         
         const token = user.generateVerifyToken();
         await sendEmail(user.email, token, user.name, "verify");
 
-        res.send(newUser);
+        res.json({
+            message : "updated successfully"
+        });
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+
+
+router.put("/edit/dob",auth, async (req, res) => {
+    try{
+        const {error} = validateUserDOB(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
+
+        await User.findByIdAndUpdate(req.user._id, {
+            dob: req.body.dob
+        }, {new: true});
+
+        res.json({
+            message : "updated successfully"
+        });
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+
+router.put("/edit/gender",auth, async (req, res) => {
+    try{
+        const {error} = validateUserGender(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
+
+        const newUser = await User.findByIdAndUpdate(req.user._id, {
+            gender: req.body.gender
+        }, {new: true});
+
+        res.json({
+            message : "updated successfully"
+        });
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+
+router.put("/edit/expertin",auth, async (req, res) => {
+    try{
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
+
+        await User.findByIdAndUpdate(req.user._id, {
+            expertIn: [req.body.expertIn]
+        }, {new: true});
+
+        res.json({
+            message : "updated successfully"
+        });
     }
     catch(ex){
         console.error(ex);
@@ -324,8 +406,12 @@ router.get("/get/:pagesize/:pagenum",admin, async(req,res)=>{
 
 router.delete("/delete/:id" ,admin, async (req, res)=> {
     const user = await User.findByIdAndRemove(req.params.id);
-    if (!user) return res.status(404).send("The user with the given ID was not found.");
-    res.send("user deleted");
+    if (!user) return res.status(404).json({
+        error : "The user with the given ID was not found."
+    });
+    res.json({
+        message : "user deleted successfully"
+    });
 })
 
 
@@ -335,7 +421,9 @@ router.put("/edit/username/:id",admin, async (req, res) => {
         if (error) return res.status(400).send(error.details[0].message);
 
         const user = await User.findById(req.params.id);
-        if (!user) return res.status(400).send("Invalid user.");
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
 
         let username = await User.findOne({name: req.body.name});
         if(username){
@@ -346,9 +434,11 @@ router.put("/edit/username/:id",admin, async (req, res) => {
 
         const newUser = await User.findByIdAndUpdate(req.user._id, {
             name: req.body.name
-        }, {new: true}).select("-password -__v -isAdmin");
+        }, {new: true});
         
-        res.send(newUser);
+        res.json({
+            message : "updated successfully"
+        });
     }
     catch(ex){
         console.error(ex);
@@ -365,15 +455,75 @@ router.put("/edit/email/:id", admin, async (req, res) => {
         if (error) return res.status(400).send(error.details[0].message);
 
         const user = await User.findById(req.params.id);
-        if (!user) return res.status(400).send("Invalid user.");
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
 
 
         await User.findByIdAndUpdate(req.params._id, {
             email : req.body.email,
             isVerified : false
-        }, {new: true}).select("-password -__v -isAdmin");
+        }, {new: true});
         
-        res.send("updated successfully");
+        res.json({
+            message : "updated successfully"
+        });
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+
+
+router.put("/edit/gender/:id",admin, async (req, res) => {
+    try{
+        const {error} = validateUserGender(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
+
+
+        await User.findByIdAndUpdate(req.user._id, {
+            gender: req.body.gender
+        }, {new: true});
+        
+        res.json({
+            message : "updated successfully"
+        });
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+
+});
+router.put("/edit/dob/:id",admin, async (req, res) => {
+    try{
+        const {error} = validateUserDOB(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(400).json({
+            error: "invalid user"
+        });
+
+
+        await User.findByIdAndUpdate(req.user._id, {
+            dob: req.body.dob
+        }, {new: true});
+        
+        res.json({
+            message : "updated successfully"
+        });
     }
     catch(ex){
         console.error(ex);

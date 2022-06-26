@@ -2,6 +2,7 @@
 const jwt =require ("jsonwebtoken");
 const mongoose = require('mongoose');
 const Joi = require('joi');
+const { date } = require("joi");
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -34,6 +35,18 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    dob:{
+        type: Date,
+        default: null
+    },
+    gender:{
+        type: String,
+        default: null
+    },
+    expertIn:{
+        type: Array,
+        default: null
+    }
 });
 
 userSchema.methods.generateAuthToken = function(){
@@ -94,6 +107,20 @@ function validateUserPassword(user){
     return schema.validate(user);
 }
 
+function validateUserDOB(user){
+    const schema = Joi.object({
+        dob: Joi.date().required()
+    });
+    return schema.validate(user);
+}
+
+function validateUserGender(user){
+    const schema = Joi.object({
+        dob: Joi.string().required()
+    });
+    return schema.validate(user);
+}
+
 
 module.exports.userSchema = userSchema;
 module.exports.User = User;
@@ -102,3 +129,5 @@ module.exports.validateLogin= validateLogin;
 module.exports.validateUsername= validateUsername;
 module.exports.validateUserEmail= validateUserEmail;
 module.exports.validateUserPassword= validateUserPassword;
+module.exports.validateUserDOB = validateUserDOB;
+module.exports.validateUserGender = validateUserGender;

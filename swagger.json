@@ -431,10 +431,7 @@
           ],
           "responses": {
             "200": {
-              "description": "updated successfully",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
+              "description": "updated successfully"
             },
             "404": {
               "description": "This user doesn't exist"
@@ -476,10 +473,8 @@
           ],
           "responses": {
             "200": {
-              "description": "updated successfully",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
+              "description": "updated successfully"
+              
             },
             "404": {
               "description": "This user doesn't exist"
@@ -490,6 +485,138 @@
           }
         }
       },
+
+
+
+
+      "/users/edit/dob": {
+        "put": {
+          "tags": ["Users"],
+          "summary": "update date of birth of the current user",
+          "description": "",
+          "operationId": "updateDOB",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "dob",
+              "type": "date",
+              "description": "dob that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+      "/users/edit/gender": {
+        "put": {
+          "tags": ["Users"],
+          "summary": "update gender of the current user",
+          "description": "",
+          "operationId": "updateGender",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "gender",
+              "description": "gender that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/users/edit/expertin": {
+        "put": {
+          "tags": ["Users"],
+          "summary": "update expertIn of the current user",
+          "description": "",
+          "operationId": "updateExperIn",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "expertIn",
+              "description": "expertIn array that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
 
 
 
@@ -769,6 +896,110 @@
           }
         }
       },
+
+
+
+      "/users/edit/dob/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update dob of the user by id ",
+          "description": "",
+          "operationId": "updateDOB",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "dob",
+              "type":"date",
+              "description": "dob that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of the user that needs to be updated ",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      "/users/edit/gender/{id}": {
+        "put": {
+          "tags": ["Admin"],
+          "summary": "update gender of the user by id ",
+          "description": "",
+          "operationId": "updateGender",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "gender",
+              "type":"string",
+              "description": "gender that needs to be updated.",
+              "required": true
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of the user that needs to be updated ",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "updated successfully"
+            },
+            "404": {
+              "description": "This user doesn't exist"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
 
 
 
@@ -1449,7 +1680,6 @@
             {
               "in": "body",
               "name": "tags",
-              "type": "array",
               "description": "Post tags that needs to be updated",
               "required": true
             },
