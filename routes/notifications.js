@@ -14,8 +14,8 @@ router.get("/get/" , auth, async (req,res) =>{
         }
         const notifications = await Notification
                                             .find({"user._id":user._id})
-                                            .select("notification")
-                                            .sort("date")
+                                            .select("notification isNoticied")
+                                            .sort("-date")
         res.send(notifications);
     }
     catch(ex){

@@ -42,7 +42,7 @@ router.get("/get/:pagesize/:pagenum", async(req,res)=>{
     try{
         const questions = await Question
                             .find()
-                            .sort("date")
+                            .sort("-date")
                             .select("_id title data author.name tags date")
                             .skip(pagesize*(pagenum-1))
                             .limit(pagesize);
@@ -72,7 +72,7 @@ router.get("/get/myquestions/:pagesize/:pagenum", auth, async(req,res)=>{
     try{
         const questions = await Question
                             .find({"author._id" : req.user._id})
-                            .sort("date")
+                            .sort("-date")
                             .select("_id title data author.name tags date")
                             .skip(pagesize*(pagenum-1))
                             .limit(pagesize);
