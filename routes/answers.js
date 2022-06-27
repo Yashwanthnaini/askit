@@ -2,7 +2,7 @@ const {Answer, validateAnswer } = require("../models/answerModel");
 const {Question} = require("../models/questionModel");
 const {Notification} = require("../models/notificationModel");
 const admin = require("../middleware/admin");
-const sendEmail = require("../resources/mailer");
+const sendAnswerEmail = require("../resources/answerMail");
 const auth = require("../middleware/authorization");
 const {User} = require("../models/userModel");
 const express = require("express");
@@ -41,7 +41,7 @@ router.post("/add", auth, async (req,res) => {
         })
         await notification.save();
         const token = question._id;
-        await sendEmail(question.author.email, token, user.name, "answer");
+        await sendAnswerEmail(question.author.email, token, question.author.name, user.name);
         res.json({
             message : "answer updated successfully"
         })

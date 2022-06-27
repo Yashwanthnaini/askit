@@ -5,6 +5,7 @@ const {User} = require("../models/userModel");
 const {Notification} = require("../models/notificationModel");
 const {Post} = require("../models/postModel");
 const {Question} = require("../models/questionModel");
+const sendCommentEmail = require("../resources/commentMail");
 const {Answer} = require("../models/answerModel");
 const express = require("express");
 const router = express.Router();
@@ -49,7 +50,10 @@ router.post("/add", auth, async (req,res) => {
             },
             link : `https://askito.herokuapp.com/api/${req.body.type}s/get/${post._id}`
         })
+        
         await notification.save();
+        const token = post._id;
+        await sendCommentEmail(post.author.email, token, post.author.name, req.body.type, user.name);
         res.json({
             message : "comment updated successfully"
         })
