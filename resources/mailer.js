@@ -970,17 +970,6 @@ module.exports = async function(email,token,name,type) {
 
       `;
     }
-    else if(type == "answer"){
-      var subject = "Solution Received";
-      var body_html = `
-      <!DOCTYPE> 
-      <html>
-        <body>
-          <p> Hi , ${name} some one answered to your question : </p> <b><a herf="https://askito.herokuapp.com/questions/get/${token}">click here</a></b>
-        </body>
-      </html>`;
-    }
-
     // Specify the fields in the email.
     let mailOptions = {
       from: senderAddress,
