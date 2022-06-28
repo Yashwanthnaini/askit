@@ -63,6 +63,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    githubUrl:{
+        type: String,
+        default: null
+    },
+    mediumUrl:{
+        type: String,
+        default: null
+    },
+    linkedInUrl:{
+        type: String,
+        default: null
+    },
+    stackOverFlowUrl:{
+        type: String,
+        default: null
+    },
     location:{
         type: String,
         default: null

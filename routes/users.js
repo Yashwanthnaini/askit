@@ -257,6 +257,10 @@ router.put("/update",auth, async (req, res) => {
             url: req.body.url,
             twitterUrl: req.body.twitterUrl,
             instagramUrl: req.body.instagramUrl,
+            githubUrl: req.body.githubUrl,
+            mediumUrl: req.body.mediumUrl,
+            linkedInUrl : req.body.linkedInUrl,
+            stackOverFlowUrl: req.body.stackOverFlowUrl,
             location: req.body.location
         }, {new: true});
         
@@ -477,6 +481,10 @@ router.put("/admin/update", admin, async (req, res) => {
             url: req.body.url,
             twitterUrl: req.body.twitterUrl,
             instagramUrl: req.body.instagramUrl,
+            githubUrl: req.body.githubUrl,
+            mediumUrl: req.body.mediumUrl,
+            linkedInUrl : req.body.linkedInUrl,
+            stackOverFlowUrl: req.body.stackOverFlowUrl,
             location: req.body.location
         }, {new: true});
         

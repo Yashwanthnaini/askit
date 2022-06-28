@@ -7,6 +7,7 @@ const comments = require("../routes/comments");
 const notifications = require("../routes/notifications");
 const questions = require("../routes/questions");
 const answers = require("../routes/answers");
+const reports = require("../routes/reports");
 const oauth = require("../routes/oauth");
 const cors = require('cors');
 const express = require ("express");
@@ -27,4 +28,5 @@ module.exports = function (app) {
     app.use("/api/notifications",notifications);
     app.use("/api/questions", questions);
     app.use("/api/answers",answers);
+    app.use("/api/reports",reports);
 }

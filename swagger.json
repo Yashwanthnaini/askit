@@ -2590,6 +2590,22 @@
               "type":"string",
               "required":false
             },
+            "githubUrl": {
+              "type":"string",
+              "required":false
+            },
+            "linkedInUrl": {
+              "type":"string",
+              "required":false
+            },
+            "mediumUrl": {
+              "type":"string",
+              "required":false
+            },
+            "stackOverFlowUrl": {
+              "type":"string",
+              "required":false
+            },
             "location": {
               "type":"string",
               "required":false
