@@ -66,6 +66,8 @@ router.get("/get/:pagesize/:pagenum", async(req,res)=>{
 });
 
 
+
+
 router.get("/get/myquestions/:pagesize/:pagenum", auth, async(req,res)=>{
     const pagesize = req.params.pagesize
     const pagenum = req.params.pagenum
@@ -95,6 +97,33 @@ router.get("/get/myquestions/:pagesize/:pagenum", auth, async(req,res)=>{
         });
     }
 });
+
+
+
+router.get("/interested", auth, async (req, res) => {
+    try{
+
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(400).send("Invalid user.");
+
+        if(user.expertIn==null){
+            return res.status(400).send("can't find user interests");
+        }
+        const questions = await Question.find({ tags: { $in: user.expertIn }}).select("__v");
+        
+        res.json({
+            questions : questions   
+        })
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+})
+
+
 
 router.post("/add", auth, async(req, res)=>{
     try{

@@ -2,10 +2,9 @@ const {Report,validateReport} = require("../models/reportModel");
 const auth = require("../middleware/authorization");
 const admin = require("../middleware/admin");
 const {User} = require("../models/userModel");
-const {Notification} = require("../models/notificationModel");
 const {Post} = require("../models/postModel");
 const {Question} = require("../models/questionModel");
-const sendCommentEmail = require("../resources/commentMail");
+const {Comment} = require("../models/commentModel");
 const {Answer} = require("../models/answerModel");
 const express = require("express");
 const router = express.Router();
@@ -63,6 +62,66 @@ router.post("/add", auth, async (req,res) => {
 
 
 })
+
+//admin privlagues
+
+router.get("/admin/get/:pagesize/:pagenum",admin, async(req,res)=>{
+    const pagesize = req.params.pagesize
+    const pagenum = req.params.pagenum
+    try{
+        const reports = await Report
+                            .find()
+                            .sort("-date")
+                            .select("-__v")
+                            .skip(pagesize*(pagenum-1))
+                            .limit(pagesize);
+        if(!reports){
+            return res.json({
+                message : "No reports found"
+            })
+        }
+        const count = await Report.countDocuments({});
+        res.json({
+            reports: reports,
+            totalReports : count
+        });                    
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+});
+
+router.get("/admin/get/report/:id", admin, async(req, res)=>{
+    try{
+        const report = await Report.findById(req.params.id).select("-__v");
+        if (!report) return res.status(400).json({
+            error: "invalid report"
+        });
+
+        res.send(report);
+    }
+    catch(ex){
+        console.error(ex);
+        res.status(500).json({
+            error: "something went wrong try after some time!", 
+        });
+    }
+});
+
+
+router.delete("/admin/delete/:id" ,admin, async (req, res)=> {
+    const report = await Report.findByIdAndRemove(req.params.id);
+    if (!report) return res.status(404).json({
+        error : "The report with the given ID was not found."
+    });
+    res.json({
+        message : "report deleted successfully"
+    });
+})
+
 
 
 module.exports = router;

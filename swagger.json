@@ -34,6 +34,12 @@
         "name": "Comments",
         "description": "API for comments in the system"
       },
+
+      {
+        "name": "Reports",
+        "description": "API for reports in the system"
+      },
+
       {
         "name": "Tags",
         "description": "API for tags in the system"
@@ -1089,7 +1095,7 @@
       
 
 
-      "/admin/answers/delete/{id}": {
+      "/answers/admin/delete/{id}": {
         "delete": {
           "tags": ["Admin"],
           "summary": "delete answer by id",
@@ -1121,6 +1127,142 @@
           "responses": {
             "200": {
               "description": "Answer deleted"
+            },
+            "404": {
+              "description": "The Answer with the given ID was not found."
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/reports/admin/get/{pagesize}/{pagenum}": {
+        "get": {
+          "tags": ["Admin"],
+          "summary": "Get total reports in alphabetical order by name",
+          "description": "",
+          "operationId": "getReports",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "pagesize",
+              "description": "size of the page like 5 for 5 users per page",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "pagenum",
+              "description": "page number",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Report"
+              }
+            },
+            "404": {
+              "description": "No reports found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/reports/admin/get/reports/{id}": {
+        "get": {
+          "tags": ["Admin"],
+          "summary": "Get report  details by id",
+          "description": "",
+          "operationId": "getReportById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "name",
+              "description": "id of report to be fetched",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "user fetched successfully",
+              "schema": {
+                "$ref": "#/definitions/Report"
+              }
+            },
+            "404": {
+              "description": "report not found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+      "/reports/admin/delete/{id}": {
+        "delete": {
+          "tags": ["Admin"],
+          "summary": "delete report by id",
+          "description": "",
+          "operationId": "deleteReportById",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "id of report to be deleted",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+
+          ],
+          "responses": {
+            "200": {
+              "description": "Report deleted"
             },
             "404": {
               "description": "The Answer with the given ID was not found."
@@ -1583,6 +1725,49 @@
           }
         }
       },
+
+
+
+
+      "/questions/interested": {
+        "get": {
+          "tags": ["Questions"],
+          "summary": "Get Questions interested by current user",
+          "description": "",
+          "operationId": "getQuestion",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "schema": {
+                "$ref": "#/definitions/Question"
+              }
+            },
+            "404": {
+              "description": "no questions found"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
 
 
       "/questions/get/{pagesize}/{pagenum}": {
@@ -2422,6 +2607,80 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+      "/reports/add": {
+        "post": {
+          "tags": ["Reports"],
+          "summary": "add new report",
+          "description": "",
+          "operationId": "addReport",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "token to be verified",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "types are answer,question,post,comment",
+              "required": true,
+              "schema": {
+              "$ref": "#/definitions/Report"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "report updated successfully"
+            },
+            "400": {
+              "description": "Invalid user"
+            },
+            "500": {
+              "description": "something went wrong try after some time!"
+            }
+          }
+        }
+      },
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       "/search/{keyword}": {
         "get": {
           "tags": ["Search"],
@@ -2725,6 +2984,22 @@
             },
             "type" :{
               "type" : "answer | question | post"
+            }
+          }
+        },
+
+        "Report": {
+          
+          "type": "object",
+          "properties": {
+            "report": {
+              "type": "string"
+            },
+            "postId" : {
+              "type" : "string"
+            },
+            "type" :{
+              "type" : "answer | question | post |comment"
             }
           }
         },
