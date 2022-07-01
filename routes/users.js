@@ -104,11 +104,11 @@ router.get("/verify/:token", emailVerify, async (req, res) => {
     try{
         const user = await User.findById(req.user._id);
         if(!user){
-            return res.redirect("http://localhost:3000/email/verify/invalid");
+            return res.redirect("https://askito.netlify.app/email/verify/invalid");
         }
         user.isVerified = true;
         await user.save();
-        res.redirect("http://localhost:3000/email/verify");
+        res.redirect("https://askito.netlify.app/email/verify");
     }
     catch(ex){
         console.error(ex);

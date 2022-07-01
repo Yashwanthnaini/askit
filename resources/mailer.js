@@ -801,7 +801,7 @@ module.exports = async function(email,token,name,type) {
       exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;
       font-family: 'Asap', Helvetica, sans-serif; font-size: 16px; padding-top:24px;
       padding-right:48px; padding-bottom:24px; padding-left:48px;" valign="middle">
-                                              <a class="mcnButton" href="http://localhost:3000/resetpassword/${token}" style="mso-line-height-rule: exactly;
+                                              <a class="mcnButton" href="https://askito.netlify.app/resetpassword/${token}" style="mso-line-height-rule: exactly;
       -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; display: block; color: #f57153;
       font-weight: normal; text-decoration: none; font-weight: normal;letter-spacing:
       1px;line-height: 100%;text-align: center;text-decoration: none;color:

@@ -37,7 +37,7 @@ router.get("/handler/google", async(req, res) => {
         }
         
         const token = user.generateAuthToken();
-        res.redirect(`http://localhost:3000/usertoken?${token}`);
+        res.redirect(`https://askito.netlify.app/usertoken?${token}`);
     }
     catch(ex){
         console.error(ex);

@@ -48,7 +48,7 @@ module.exports = async function(email,token,name,type,nametwo) {
                           <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Hello, ${name}
                                               Some one named ${nametwo} commented on your ${type} 
                                               </p>
-                          <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="https://askito.herokuapp.com/api/${type}s/get/${token}" style="color:#ee4c50;text-decoration:underline;">click here</a></p>
+                          <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="https://askito.netlify.app/${type}s/${type}/${token}" style="color:#ee4c50;text-decoration:underline;">click here</a></p>
                         </td>
                       </tr>
                     </table>
