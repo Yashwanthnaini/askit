@@ -122,6 +122,25 @@ function validateUser(user){
     return schema.validate(user);
 }
 
+
+function validateUserUpdate(user){
+    const schema = Joi.object({
+        name: Joi.string().min(5).max(50).required(),
+        email: Joi.string().min(5).max(255).required().email(),
+        dob: Joi.date().optional(),
+        gender: Joi.string().optional(),
+        expertIn: Joi.array().items(Joi.string()).optional(),
+        bio: Joi.string().optional(),
+        url: Joi.string().optional(),
+        twitterUrl: Joi.string().optional(),
+        instagramUrl: Joi.string().optional(),
+        location: Joi.string().optional()
+
+    });
+    return schema.validate(user);
+}
+
+
 function validateUsername(user){
     const schema = Joi.object({
         name: Joi.string().min(5).max(50).required()
@@ -171,6 +190,7 @@ function validateUserGender(user){
 module.exports.userSchema = userSchema;
 module.exports.User = User;
 module.exports.validateUser= validateUser;
+module.exports.validateUserUpdate = validateUserUpdate;
 module.exports.validateLogin= validateLogin;
 module.exports.validateUsername= validateUsername;
 module.exports.validateUserEmail= validateUserEmail;

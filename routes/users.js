@@ -1,4 +1,4 @@
-const {User, validateUser, validateLogin, validateUsername, validateUserEmail, validateUserPassword, validateUserDOB, validateUserGender} = require("../models/userModel");
+const {User, validateUser, validateLogin, validateUsername, validateUserEmail, validateUserPassword, validateUserDOB, validateUserGender, validateUserUpdate} = require("../models/userModel");
 const auth = require("../middleware/authorization");
 const emailVerify = require("../middleware/emailVerify");
 const resetVerify = require("../middleware/resetVerify");
@@ -228,7 +228,7 @@ router.post("/reset/:token", resetVerify, async (req, res) => {
 
 router.put("/update",auth, async (req, res) => {
     try{
-        const {error} = validateUser(req.body);
+        const {error} = validateUserUpdate(req.body);
         if (error) return res.status(400).send(error.details[0].message);
 
         const user = await User.findById(req.user._id);
@@ -249,7 +249,6 @@ router.put("/update",auth, async (req, res) => {
         await User.findByIdAndUpdate(req.user._id, {
             name: req.body.name,
             email: req.body.email,
-            password: password,
             dob: req.body.dob,
             gender: req.body.gender,
             expertIn: req.body.expertIn,
