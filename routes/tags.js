@@ -6,7 +6,7 @@ const admin = require("../middleware/admin");
 router.get("/get/", async (req, res) => {
     try{
         const tags = await Tag
-                        .fing()
+                        .find()
                         .select("name")
                         .sort({name : 1})
         res.send(tags);
