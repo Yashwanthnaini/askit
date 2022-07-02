@@ -234,14 +234,12 @@ router.put("/update",auth, async (req, res) => {
         });
 
         let username = await User.findOne({name: req.body.name});
-        if(username){
+        if(username && user.name != req.body.name)
+        {
             return res.status(400).json({
                 error: "try different username"
             });
         }
-
-        const salt = await bcrypt.genSalt(10);
-        const password = await bcrypt.hash(req.body.password, salt);
 
         await User.findByIdAndUpdate(req.user._id, {
             name: req.body.name,
