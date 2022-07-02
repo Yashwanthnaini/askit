@@ -228,9 +228,6 @@ router.post("/reset/:token", resetVerify, async (req, res) => {
 
 router.put("/update",auth, async (req, res) => {
     try{
-        const {error} = validateUserUpdate(req.body);
-        if (error) return res.status(400).send(error.details[0].message);
-
         const user = await User.findById(req.user._id);
         if (!user) return res.status(400).json({
             error: "invalid user"
