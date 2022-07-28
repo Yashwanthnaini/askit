@@ -6,8 +6,7 @@ module.exports = async function(email,token,name,type) {
       host: "smtp-relay.sendinblue.com",
       port: 587,
       auth: {
-        user: "b171561@rgukt.ac.in",
-        pass: "DRZwGEPUxBAVO4Km",
+       
       },
     });
     const senderAddress = "nainiyashwanth@gmail.com";
