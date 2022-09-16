@@ -3,6 +3,8 @@ const nodemailer = require("nodemailer");
 
 module.exports = async function(email,token,name,type) {
     // Create the SMTP transport.
+    console.log(process.env.EMAIL_USERNAME);
+    console.log(process.env.EMAIL_PASSWORD);
     let transporter = nodemailer.createTransport({
       host: "smtp-relay.sendinblue.com",
       port: 587,
