@@ -1,3 +1,4 @@
+require("dotenv").config();
 const nodemailer = require("nodemailer");
 
 module.exports = async function(email,token,name,type) {
@@ -6,7 +7,8 @@ module.exports = async function(email,token,name,type) {
       host: "smtp-relay.sendinblue.com",
       port: 587,
       auth: {
-       
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
       },
     });
     const senderAddress = "nainiyashwanth@gmail.com";
